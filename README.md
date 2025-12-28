@@ -3,7 +3,7 @@
 
 Group: FMS-Group05
 
-## Project Structure
+##  Project Structure
 - src/com/faculty/ - Java source code (MVC)
 - database/ - SQL scripts
 - docs/ - Project documentation
