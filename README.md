@@ -2,7 +2,7 @@
 Faculty Management System Project
 # Faculty Management System
 
-Group:- FMS-Group05
+Group: FMS-Group05
 
 ## Project Structure
 - src/com/faculty/ - Java source code (MVC)
