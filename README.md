@@ -1,5 +1,5 @@
 
-#  Faculty Management System
+# Faculty Management System
 
 Group: FMS-Group05
 
