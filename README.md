@@ -1,5 +1,5 @@
 # faculty-management-system
-Faculty Management System  Project
+Faculty Management System Project
 # Faculty Management System
 
 Group: FMS-Group05
