@@ -31,7 +31,7 @@ public class LoginView extends JFrame {
         add(rightPanel(), BorderLayout.CENTER);
     }
 
-    // ================= LEFT PANEL (CORRECTED PLACEMENT) =================
+
     private JPanel leftPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setPreferredSize(new Dimension(450, 600));
@@ -41,7 +41,7 @@ public class LoginView extends JFrame {
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        // 1. TOP ICON (🎓)
+
         JLabel icon = new JLabel("🎓");
         icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 120));
         icon.setForeground(Color.WHITE);
@@ -49,7 +49,7 @@ public class LoginView extends JFrame {
         gbc.insets = new Insets(0, 0, 20, 0); // Spacing below icon
         panel.add(icon, gbc);
 
-        // 2. CENTER TITLE
+
         JLabel title = new JLabel("Faculty Management System");
         title.setFont(new Font("Segoe UI", Font.BOLD, 30));
         title.setForeground(Color.WHITE);
@@ -57,7 +57,7 @@ public class LoginView extends JFrame {
         gbc.insets = new Insets(0, 0, 5, 0);
         panel.add(title, gbc);
 
-        // 3. FACULTY NAME (Directly under title)
+
         JLabel faculty = new JLabel("Faculty of Computing & Technology");
         faculty.setFont(new Font("Segoe UI", Font.PLAIN, 17));
         faculty.setForeground(Color.WHITE);
@@ -65,7 +65,7 @@ public class LoginView extends JFrame {
         gbc.insets = new Insets(80, 0, 5, 0); // Large gap above to push it down
         panel.add(faculty, gbc);
 
-        // 4. BOTTOM SUBTITLE
+
         JLabel subtitle = new JLabel("Manage your academic journey");
         subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         subtitle.setForeground(Color.WHITE);
@@ -76,7 +76,7 @@ public class LoginView extends JFrame {
         return panel;
     }
 
-    // ================= RIGHT PANEL =================
+
     private JPanel rightPanel() {
         JPanel p = new JPanel(new BorderLayout());
         p.setBackground(Color.WHITE);
@@ -135,7 +135,7 @@ public class LoginView extends JFrame {
         return p;
     }
 
-    // ================= FORM LAYOUT (Vertical Stacking) =================
+
     private JPanel baseForm(boolean signup) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
