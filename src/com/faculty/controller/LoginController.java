@@ -17,7 +17,7 @@ public class LoginController {
         this.view = view;
         this.userDAO = new UserDAO();
 
-        // Buttons may be null depending on active tab, so check safely
+
         if (view.getSignInButton() != null) {
             view.getSignInButton().addActionListener(new LoginHandler());
         }
@@ -27,7 +27,7 @@ public class LoginController {
         }
     }
 
-    // ================= LOGIN =================
+
     class LoginHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -63,7 +63,7 @@ public class LoginController {
         }
     }
 
-    // ================= REGISTER =================
+
     class RegisterHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
