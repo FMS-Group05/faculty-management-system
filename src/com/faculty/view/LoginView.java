@@ -3,30 +3,26 @@ package com.faculty.view;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 
 public class LoginView extends JFrame {
 
     private final Color PRIMARY = new Color(132, 84, 255);
-    private final Color LIGHT_GRAY = new Color(230, 230, 230);
-    private final Color TEXT_GRAY = new Color(150, 150, 150);
+    private final Color LIGHT_GRAY = new Color(220, 220, 220);
+    private final Color TEXT_GRAY = new Color(160, 160, 160);
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
-
     private JTextField txtUsername;
-    private JPasswordField txtPassword;
-    private JPasswordField txtConfirm;
-
-    private JButton btnSignIn;
-    private JButton btnSignUp;
-
+    private JPasswordField txtPassword, txtConfirm;
+    private JButton btnSignIn, btnSignUp;
     private JToggleButton btnAdmin, btnStudent, btnLecturer;
     private JLabel lblSignInTab, lblSignUpTab;
 
     public LoginView() {
         setTitle("Faculty Management System");
-        setSize(950, 550);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -35,222 +31,207 @@ public class LoginView extends JFrame {
         add(rightPanel(), BorderLayout.CENTER);
     }
 
-    // ================= LEFT PANEL =================
+    // ================= LEFT PANEL (CORRECTED PLACEMENT) =================
     private JPanel leftPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setPreferredSize(new Dimension(450, 550));
+        panel.setPreferredSize(new Dimension(450, 600));
         panel.setBackground(PRIMARY);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
 
+        // 1. TOP ICON (🎓)
         JLabel icon = new JLabel("🎓");
-        icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 100));
+        icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 120));
         icon.setForeground(Color.WHITE);
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 0, 20, 0); // Spacing below icon
+        panel.add(icon, gbc);
 
+        // 2. CENTER TITLE
         JLabel title = new JLabel("Faculty Management System");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        title.setFont(new Font("Segoe UI", Font.BOLD, 30));
         title.setForeground(Color.WHITE);
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, 0, 5, 0);
+        panel.add(title, gbc);
 
+        // 3. FACULTY NAME (Directly under title)
         JLabel faculty = new JLabel("Faculty of Computing & Technology");
-        faculty.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        faculty.setFont(new Font("Segoe UI", Font.PLAIN, 17));
         faculty.setForeground(Color.WHITE);
+        gbc.gridy = 2;
+        gbc.insets = new Insets(80, 0, 5, 0); // Large gap above to push it down
+        panel.add(faculty, gbc);
 
+        // 4. BOTTOM SUBTITLE
         JLabel subtitle = new JLabel("Manage your academic journey");
         subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         subtitle.setForeground(Color.WHITE);
-
-        gbc.gridy = 0; panel.add(icon, gbc);
-        gbc.gridy = 1; panel.add(title, gbc);
-        gbc.gridy = 2; panel.add(faculty, gbc);
-        gbc.gridy = 3; panel.add(subtitle, gbc);
+        gbc.gridy = 3;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        panel.add(subtitle, gbc);
 
         return panel;
     }
 
     // ================= RIGHT PANEL =================
     private JPanel rightPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.WHITE);
+        JPanel p = new JPanel(new BorderLayout());
+        p.setBackground(Color.WHITE);
 
-        panel.add(tabHeader(), BorderLayout.NORTH);
+        JPanel header = new JPanel(new FlowLayout(FlowLayout.RIGHT, 40, 25));
+        header.setBackground(Color.WHITE);
+
+        lblSignInTab = tab("Sign In", true);
+        lblSignUpTab = tab("Sign Up", false);
+        header.add(lblSignInTab);
+        header.add(lblSignUpTab);
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
-        cardPanel.setBackground(Color.WHITE);
-
         cardPanel.add(signInForm(), "signin");
         cardPanel.add(signUpForm(), "signup");
 
-        panel.add(cardPanel, BorderLayout.CENTER);
-        return panel;
+        p.add(header, BorderLayout.NORTH);
+        p.add(cardPanel, BorderLayout.CENTER);
+        return p;
     }
 
-    // ================= TABS =================
-    private JPanel tabHeader() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 30, 25));
-        panel.setBackground(Color.WHITE);
+    private JLabel tab(String text, boolean active) {
+        JLabel l = new JLabel(text);
+        l.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        l.setForeground(active ? PRIMARY : TEXT_GRAY);
+        l.setBorder(active ? BorderFactory.createMatteBorder(0, 0, 3, 0, PRIMARY) : null);
+        l.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        lblSignInTab = tabLabel("Sign In", true);
-        lblSignUpTab = tabLabel("Sign Up", false);
-
-        panel.add(lblSignInTab);
-        panel.add(lblSignUpTab);
-        return panel;
-    }
-
-    private JLabel tabLabel(String text, boolean active) {
-        JLabel lbl = new JLabel(text);
-        lbl.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lbl.setForeground(active ? PRIMARY : TEXT_GRAY);
-        lbl.setBorder(active ? BorderFactory.createMatteBorder(0, 0, 3, 0, PRIMARY) : null);
-        lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+        l.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                switchTab(text.equals("Sign In"));
+                boolean signIn = text.equals("Sign In");
+                cardLayout.show(cardPanel, signIn ? "signin" : "signup");
+                lblSignInTab.setForeground(signIn ? PRIMARY : TEXT_GRAY);
+                lblSignInTab.setBorder(signIn ? BorderFactory.createMatteBorder(0, 0, 3, 0, PRIMARY) : null);
+                lblSignUpTab.setForeground(!signIn ? PRIMARY : TEXT_GRAY);
+                lblSignUpTab.setBorder(!signIn ? BorderFactory.createMatteBorder(0, 0, 3, 0, PRIMARY) : null);
             }
         });
-        return lbl;
+        return l;
     }
 
-    private void switchTab(boolean signIn) {
-        cardLayout.show(cardPanel, signIn ? "signin" : "signup");
-
-        lblSignInTab.setForeground(signIn ? PRIMARY : TEXT_GRAY);
-        lblSignInTab.setBorder(signIn ? BorderFactory.createMatteBorder(0, 0, 3, 0, PRIMARY) : null);
-
-        lblSignUpTab.setForeground(!signIn ? PRIMARY : TEXT_GRAY);
-        lblSignUpTab.setBorder(!signIn ? BorderFactory.createMatteBorder(0, 0, 3, 0, PRIMARY) : null);
-    }
-
-    // ================= FORMS =================
     private JPanel signInForm() {
-        JPanel p = baseForm();
-        btnSignIn = roundedButton("Sign In");
+        JPanel p = baseForm(false);
         p.add(Box.createVerticalStrut(30));
+        btnSignIn = roundedButton("Sign In");
         p.add(btnSignIn);
         return p;
     }
 
     private JPanel signUpForm() {
-        JPanel p = baseForm();
-
-        p.add(Box.createVerticalStrut(15));
-        p.add(inputLabel("Confirm Password"));
-        txtConfirm = passwordField();
-        p.add(txtConfirm);
-
+        JPanel p = baseForm(true);
         p.add(Box.createVerticalStrut(30));
         btnSignUp = roundedButton("Sign Up");
         p.add(btnSignUp);
-
         return p;
     }
 
-    private JPanel baseForm() {
+    // ================= FORM LAYOUT (Vertical Stacking) =================
+    private JPanel baseForm(boolean signup) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBackground(Color.WHITE);
-        p.setBorder(BorderFactory.createEmptyBorder(40, 80, 40, 40)); // <<< LEFT ALIGN FIX
+        p.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 40)); // Left aligned like screenshot
 
-        p.add(inputLabel("Username"));
-        txtUsername = textField();
+        p.add(label("Username"));
+        txtUsername = field();
         p.add(txtUsername);
 
         p.add(Box.createVerticalStrut(15));
-        p.add(inputLabel("Password"));
-        txtPassword = passwordField();
+        p.add(label("Password"));
+        txtPassword = password();
         p.add(txtPassword);
 
+        if (signup) {
+            p.add(Box.createVerticalStrut(15));
+            p.add(label("Confirm Password"));
+            txtConfirm = password();
+            p.add(txtConfirm);
+        }
+
         p.add(Box.createVerticalStrut(15));
-        p.add(inputLabel("Role"));
+        p.add(label("Role"));
         p.add(rolePanel());
 
         return p;
     }
 
-    // ================= ROLE =================
     private JPanel rolePanel() {
         JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         p.setBackground(Color.WHITE);
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        btnAdmin = roleButton("Admin", true);   // highlighted by default
-        btnStudent = roleButton("Student", false);
-        btnLecturer = roleButton("Lecturer", false);
+        btnAdmin = role("Admin", true); // Pre-highlighted
+        btnStudent = role("Student", false);
+        btnLecturer = role("Lecturer", false);
 
         ButtonGroup g = new ButtonGroup();
-        g.add(btnAdmin);
-        g.add(btnStudent);
-        g.add(btnLecturer);
+        g.add(btnAdmin); g.add(btnStudent); g.add(btnLecturer);
 
-        p.add(btnAdmin);
-        p.add(btnStudent);
-        p.add(btnLecturer);
+        p.add(btnAdmin); p.add(btnStudent); p.add(btnLecturer);
         return p;
     }
 
-    // ================= COMPONENTS =================
-    private JLabel inputLabel(String text) {
-        JLabel l = new JLabel(text);
+    private JLabel label(String t) {
+        JLabel l = new JLabel(t);
         l.setFont(new Font("Segoe UI", Font.BOLD, 14));
         l.setForeground(PRIMARY);
         l.setAlignmentX(Component.LEFT_ALIGNMENT);
         return l;
     }
 
-    private JTextField textField() {
+    private JTextField field() {
         JTextField f = new JTextField();
-        styleField(f);
-        return f;
-    }
-
-    private JPasswordField passwordField() {
-        JPasswordField f = new JPasswordField();
-        styleField(f);
-        return f;
-    }
-
-    private void styleField(JTextField f) {
-        f.setMaximumSize(new Dimension(320, 38));
-        f.setPreferredSize(new Dimension(320, 38));
-        f.setBorder(new RoundedBorder(PRIMARY, 15));
-        f.setCaretColor(PRIMARY);
+        f.setMaximumSize(new Dimension(380, 40));
+        f.setBorder(new RoundedBorder(PRIMARY, 2, 15));
         f.setAlignmentX(Component.LEFT_ALIGNMENT);
+        return f;
     }
 
-    private JButton roundedButton(String text) {
-        JButton b = new JButton(text) {
+    private JPasswordField password() {
+        JPasswordField f = new JPasswordField();
+        f.setMaximumSize(new Dimension(380, 40));
+        f.setBorder(new RoundedBorder(PRIMARY, 2, 15));
+        f.setAlignmentX(Component.LEFT_ALIGNMENT);
+        return f;
+    }
+
+    private JButton roundedButton(String t) {
+        JButton b = new JButton(t) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(PRIMARY);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
                 g2.setColor(Color.WHITE);
-                g2.setFont(getFont());
                 FontMetrics fm = g2.getFontMetrics();
-                g2.drawString(text,
-                        (getWidth() - fm.stringWidth(text)) / 2,
-                        (getHeight() + fm.getAscent()) / 2 - 3);
+                g2.drawString(t, (getWidth() - fm.stringWidth(t)) / 2, (getHeight() + fm.getAscent()) / 2 - 4);
             }
         };
         b.setOpaque(false);
-        b.setBorderPainted(false);
         b.setContentAreaFilled(false);
+        b.setBorderPainted(false);
         b.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        b.setMaximumSize(new Dimension(320, 45));
+        b.setMaximumSize(new Dimension(380, 45));
         b.setAlignmentX(Component.LEFT_ALIGNMENT);
         return b;
     }
 
-    private JToggleButton roleButton(String text, boolean selected) {
-        JToggleButton b = new JToggleButton(text, selected);
-        b.setFocusPainted(false);
-        b.setBackground(selected ? PRIMARY : LIGHT_GRAY);
+    private JToggleButton role(String t, boolean sel) {
+        JToggleButton b = new JToggleButton(t, sel);
+        b.setBackground(sel ? PRIMARY : LIGHT_GRAY);
         b.setForeground(Color.WHITE);
-        b.setBorder(BorderFactory.createEmptyBorder(6, 16, 6, 16));
+        b.setFocusPainted(false);
+        b.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
         b.addActionListener(e -> {
             btnAdmin.setBackground(btnAdmin.isSelected() ? PRIMARY : LIGHT_GRAY);
             btnStudent.setBackground(btnStudent.isSelected() ? PRIMARY : LIGHT_GRAY);
@@ -260,15 +241,18 @@ public class LoginView extends JFrame {
     }
 
     static class RoundedBorder extends AbstractBorder {
-        Color c; int r;
-        RoundedBorder(Color c, int r) { this.c = c; this.r = r; }
+        Color c; int t, r;
+        RoundedBorder(Color c, int t, int r) { this.c = c; this.t = t; this.r = r; }
         public void paintBorder(Component comp, Graphics g, int x, int y, int w, int h) {
-            g.setColor(c);
-            g.drawRoundRect(x, y, w - 1, h - 1, r, r);
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(c);
+            g2.setStroke(new BasicStroke(t));
+            g2.drawRoundRect(x, y, w - 1, h - 1, r, r);
         }
     }
 
-    // ================= GETTERS =================
+    // Getters for Controller
     public JButton getSignInButton() { return btnSignIn; }
     public JButton getSignUpButton() { return btnSignUp; }
     public String getLoginUsername() { return txtUsername.getText(); }
