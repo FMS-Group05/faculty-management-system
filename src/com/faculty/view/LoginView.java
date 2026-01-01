@@ -25,7 +25,7 @@ public class LoginView extends JFrame {
     private JPasswordField txtSignUpConfirm;
     private JButton btnSignUp;
 
-    // Role buttons
+    // Role button
     private JToggleButton btnAdmin, btnStudent, btnLecturer;
 
     private JLabel lblSignInTab, lblSignUpTab;
