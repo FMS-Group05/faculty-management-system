@@ -18,5 +18,4 @@ public class DBConnection {
             throw new SQLException("MySQL Driver not found!");
         }
     }
-
 }
