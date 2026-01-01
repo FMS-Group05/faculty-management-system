@@ -7,7 +7,7 @@ public class User {
     private String role;
 
     // ------------------------------
-    // Existing 3-argument constructor
+    // Existing 3-argument constructors
     // ------------------------------
     public User(String username, String password, String role) {
         this.username = username;
