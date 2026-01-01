@@ -14,7 +14,7 @@ public class LoginView extends JFrame {
     private CardLayout cardLayout;
     private JPanel cardPanel;
 
-    // SIGN IN fields
+    // SIGN IN
     private JTextField txtSignInUsername;
     private JPasswordField txtSignInPassword;
     private JButton btnSignIn;
