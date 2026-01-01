@@ -7,7 +7,7 @@ public class UserDAO {
 
     // REGISTER USER
     public boolean register(String username, String password, String role) {
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Users (userName, pws, Role) VALUES (?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -28,7 +28,7 @@ public class UserDAO {
 
     // LOGIN USER
     public String login(String username, String password) {
-        String sql = "SELECT role FROM users WHERE username=? AND password=?";
+        String sql = "SELECT Role FROM Users WHERE userName=? AND pws=?";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -52,7 +52,7 @@ public class UserDAO {
 
 
     public String getRole(String username, String password) {
-        String sql = "SELECT role FROM users WHERE username=? AND password=?";
+        String sql = "SELECT Role FROM Users WHERE userName=? AND pws=?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
