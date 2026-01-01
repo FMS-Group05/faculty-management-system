@@ -19,7 +19,7 @@ public class LoginView extends JFrame {
     private JPasswordField txtSignInPassword;
     private JButton btnSignIn;
 
-    // SIGN UP fields
+    // SIGN UP
     private JTextField txtSignUpUsername;
     private JPasswordField txtSignUpPassword;
     private JPasswordField txtSignUpConfirm;
