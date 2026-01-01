@@ -17,24 +17,37 @@ public class LoginController {
 
     private void initActions() {
 
-        // SIGN UP
+        // ---------------- SIGN UP ----------------
         view.getSignUpButton().addActionListener(e -> {
-            boolean ok = dao.register(
-                    view.getLoginUsername(),
-                    view.getLoginPassword(),
-                    view.getSelectedRole()
-            );
+
+            String username = view.getSignUpUsername();
+            String password = view.getSignUpPassword();
+            String confirm = view.getSignUpConfirm();
+            String role = view.getSelectedRole();
+
+            // Check if passwords match
+            if (!password.equals(confirm)) {
+                JOptionPane.showMessageDialog(view, "Passwords do not match");
+                return;
+            }
+
+            // Register
+            boolean ok = dao.register(username, password, role);
 
             JOptionPane.showMessageDialog(view,
                     ok ? "Registration successful" : "Username already exists");
+
+            // Clear fields after success
+            if (ok) view.clearSignUpFields();
         });
 
-        // SIGN IN
+        // ---------------- SIGN IN ----------------
         view.getSignInButton().addActionListener(e -> {
-            String role = dao.login(
-                    view.getLoginUsername(),
-                    view.getLoginPassword()
-            );
+
+            String username = view.getSignInUsername();
+            String password = view.getSignInPassword();
+
+            String role = dao.getRole(username, password); // use method that returns role
 
             if (role == null) {
                 JOptionPane.showMessageDialog(view, "Invalid login");
@@ -43,10 +56,8 @@ public class LoginController {
 
             view.dispose(); // close login
 
-            // Create a User object using the username and role
-            User user = new User(view.getLoginUsername(), role);
+            User user = new User(username, role);
 
-            // Open the correct dashboard
             switch (role) {
                 case "Admin" -> new AdminDashboardView(user).setVisible(true);
                 case "Lecturer" -> new StudentDashboardView(user).setVisible(true);
