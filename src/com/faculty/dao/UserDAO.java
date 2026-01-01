@@ -36,35 +36,16 @@ public class UserDAO {
             ps.setString(1, username.trim());
             ps.setString(2, password.trim());
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getString("role"); // return role
-                } else {
-                    return null; // login failed
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
-    public String getRole(String username, String password) {
-        String sql = "SELECT role FROM users WHERE username=? AND password=?";
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setString(1, username.trim());
-            ps.setString(2, password.trim());
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getString("role");
+            if (rs.next()) {
+                return rs.getString("role");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
 
 }

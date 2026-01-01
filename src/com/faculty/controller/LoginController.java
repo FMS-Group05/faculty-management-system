@@ -22,22 +22,21 @@ public class LoginController {
 
             String username = view.getSignUpUsername();
             String password = view.getSignUpPassword();
-            String confirm = view.getSignUpConfirm();
-            String role = view.getSelectedRole();
+            String confirm  = view.getSignUpConfirm();
+            String role     = view.getSelectedRole();
 
-            // Check if passwords match
             if (!password.equals(confirm)) {
                 JOptionPane.showMessageDialog(view, "Passwords do not match");
                 return;
             }
 
-            // Register
             boolean ok = dao.register(username, password, role);
 
-            JOptionPane.showMessageDialog(view,
-                    ok ? "Registration successful" : "Username already exists");
+            JOptionPane.showMessageDialog(
+                    view,
+                    ok ? "Registration successful" : "Username already exists"
+            );
 
-            // Clear fields after success
             if (ok) view.clearSignUpFields();
         });
 
@@ -47,21 +46,22 @@ public class LoginController {
             String username = view.getSignInUsername();
             String password = view.getSignInPassword();
 
-            String role = dao.getRole(username, password); // use method that returns role
+            // USE login() OR getRole() — one is enough
+            String role = dao.login(username, password);
 
             if (role == null) {
                 JOptionPane.showMessageDialog(view, "Invalid login");
                 return;
             }
 
-            view.dispose(); // close login
+            view.dispose();
 
             User user = new User(username, role);
 
             switch (role) {
                 case "Admin" -> new AdminDashboardView(user).setVisible(true);
-                case "Lecturer" -> new StudentDashboardView(user).setVisible(true);
-                default -> new StudentDashboardView(user).setVisible(true);
+                case "Lecturer" -> new LecturerDashboardView(user).setVisible(true);
+                case "Student" -> new StudentDashboardView(user).setVisible(true);
             }
         });
     }
