@@ -3,6 +3,7 @@ package com.faculty.controller;
 import com.faculty.dao.UserDAO;
 import com.faculty.model.User;
 import com.faculty.view.*;
+
 import javax.swing.*;
 
 public class LoginController {
@@ -46,7 +47,6 @@ public class LoginController {
             String username = view.getSignInUsername();
             String password = view.getSignInPassword();
 
-            // USE login() OR getRole() — one is enough
             String role = dao.login(username, password);
 
             if (role == null) {
@@ -56,12 +56,17 @@ public class LoginController {
 
             view.dispose();
 
+            // Create a User object to pass to dashboards
             User user = new User(username, role);
 
             switch (role) {
                 case "Admin" -> new AdminDashboardView(user).setVisible(true);
                 case "Lecturer" -> new LecturerDashboardView(user).setVisible(true);
+
+                // ✅ Added Student Dashboard Launch (using your new GUI)
                 case "Student" -> new StudentDashboardView(user).setVisible(true);
+
+                default -> JOptionPane.showMessageDialog(null, "Unknown role: " + role);
             }
         });
     }
