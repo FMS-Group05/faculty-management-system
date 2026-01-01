@@ -54,6 +54,8 @@ CREATE TABLE Courses (
     cname VARCHAR(100),
     credits INT,
     Luser VARCHAR(50),
+    time INT,
+
     FOREIGN KEY (Luser) REFERENCES LDetails(userName)
 );
 
