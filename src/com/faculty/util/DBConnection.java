@@ -6,16 +6,15 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String URL =
-            "jdbc:mysql://localhost:3306/login_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private static final String FULL_URL = "jdbc:mysql://group5.mysql.database.azure.com:3306/fms?useSSL=true";
+    private static final String USER = "fms";
+    private static final String PASSWORD = "fms@12345";
 
-    private static final String USER = "root";
-    private static final String PASSWORD = "Ravindu22520";
 
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(FULL_URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
             throw new SQLException("MySQL Driver not found!", e);
         }
