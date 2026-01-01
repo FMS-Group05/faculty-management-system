@@ -3,7 +3,6 @@ package com.faculty.view;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 
 public class LoginView extends JFrame {
@@ -14,10 +13,21 @@ public class LoginView extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
-    private JTextField txtUsername;
-    private JPasswordField txtPassword, txtConfirm;
-    private JButton btnSignIn, btnSignUp;
+
+    // SIGN IN
+    private JTextField txtSignInUsername;
+    private JPasswordField txtSignInPassword;
+    private JButton btnSignIn;
+
+    // SIGN up
+    private JTextField txtSignUpUsername;
+    private JPasswordField txtSignUpPassword;
+    private JPasswordField txtSignUpConfirm;
+    private JButton btnSignUp;
+
+    // Role button
     private JToggleButton btnAdmin, btnStudent, btnLecturer;
+
     private JLabel lblSignInTab, lblSignUpTab;
 
     public LoginView() {
@@ -31,7 +41,6 @@ public class LoginView extends JFrame {
         add(rightPanel(), BorderLayout.CENTER);
     }
 
-
     private JPanel leftPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setPreferredSize(new Dimension(450, 600));
@@ -41,14 +50,12 @@ public class LoginView extends JFrame {
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
 
-
         JLabel icon = new JLabel("🎓");
         icon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 120));
         icon.setForeground(Color.WHITE);
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 20, 0); // Spacing below icon
+        gbc.insets = new Insets(0, 0, 20, 0);
         panel.add(icon, gbc);
-
 
         JLabel title = new JLabel("Faculty Management System");
         title.setFont(new Font("Segoe UI", Font.BOLD, 30));
@@ -57,14 +64,12 @@ public class LoginView extends JFrame {
         gbc.insets = new Insets(0, 0, 5, 0);
         panel.add(title, gbc);
 
-
         JLabel faculty = new JLabel("Faculty of Computing & Technology");
         faculty.setFont(new Font("Segoe UI", Font.PLAIN, 17));
         faculty.setForeground(Color.WHITE);
         gbc.gridy = 2;
-        gbc.insets = new Insets(80, 0, 5, 0); // Large gap above to push it down
+        gbc.insets = new Insets(80, 0, 5, 0);
         panel.add(faculty, gbc);
-
 
         JLabel subtitle = new JLabel("Manage your academic journey");
         subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -75,7 +80,6 @@ public class LoginView extends JFrame {
 
         return panel;
     }
-
 
     private JPanel rightPanel() {
         JPanel p = new JPanel(new BorderLayout());
@@ -135,27 +139,34 @@ public class LoginView extends JFrame {
         return p;
     }
 
-
     private JPanel baseForm(boolean signup) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBackground(Color.WHITE);
-        p.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 40)); // Left aligned like screenshot
+        p.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 40));
 
         p.add(label("Username"));
-        txtUsername = field();
-        p.add(txtUsername);
+        if (signup) {
+            txtSignUpUsername = field();
+            p.add(txtSignUpUsername);
+        } else {
+            txtSignInUsername = field();
+            p.add(txtSignInUsername);
+        }
 
         p.add(Box.createVerticalStrut(15));
         p.add(label("Password"));
-        txtPassword = password();
-        p.add(txtPassword);
-
         if (signup) {
+            txtSignUpPassword = password();
+            p.add(txtSignUpPassword);
+
             p.add(Box.createVerticalStrut(15));
             p.add(label("Confirm Password"));
-            txtConfirm = password();
-            p.add(txtConfirm);
+            txtSignUpConfirm = password();
+            p.add(txtSignUpConfirm);
+        } else {
+            txtSignInPassword = password();
+            p.add(txtSignInPassword);
         }
 
         p.add(Box.createVerticalStrut(15));
@@ -170,7 +181,7 @@ public class LoginView extends JFrame {
         p.setBackground(Color.WHITE);
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        btnAdmin = role("Admin", true); // Pre-highlighted
+        btnAdmin = role("Admin", true);
         btnStudent = role("Student", false);
         btnLecturer = role("Lecturer", false);
 
@@ -252,15 +263,32 @@ public class LoginView extends JFrame {
         }
     }
 
-    // Getters for Controller
+    // -------------------- Getters --------------------
     public JButton getSignInButton() { return btnSignIn; }
     public JButton getSignUpButton() { return btnSignUp; }
-    public String getLoginUsername() { return txtUsername.getText(); }
-    public String getLoginPassword() { return new String(txtPassword.getPassword()); }
-    public String getConfirmPassword() { return txtConfirm != null ? new String(txtConfirm.getPassword()) : ""; }
+
+    public String getSignInUsername() { return txtSignInUsername.getText().trim(); }
+    public String getSignInPassword() { return new String(txtSignInPassword.getPassword()).trim(); }
+
+    public String getSignUpUsername() { return txtSignUpUsername.getText().trim(); }
+    public String getSignUpPassword() { return new String(txtSignUpPassword.getPassword()).trim(); }
+    public String getSignUpConfirm() { return new String(txtSignUpConfirm.getPassword()).trim(); }
+
     public String getSelectedRole() {
         if (btnAdmin.isSelected()) return "Admin";
         if (btnLecturer.isSelected()) return "Lecturer";
         return "Student";
+    }
+
+    // -------------------- Clear Fields --------------------
+    public void clearSignUpFields() {
+        if (txtSignUpUsername != null) txtSignUpUsername.setText("");
+        if (txtSignUpPassword != null) txtSignUpPassword.setText("");
+        if (txtSignUpConfirm != null) txtSignUpConfirm.setText("");
+    }
+
+    public void clearSignInFields() {
+        if (txtSignInUsername != null) txtSignInUsername.setText("");
+        if (txtSignInPassword != null) txtSignInPassword.setText("");
     }
 }
