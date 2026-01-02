@@ -69,8 +69,8 @@ public class TimeTable extends JPanel {
         // ✅ ScrollPane with Persistent Vertical Scrollbar
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(new LineBorder(PURPLE, 2));
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // සැමවිටම scroll bar එක පෙන්වීමට
-        scroll.getVerticalScrollBar().setUnitIncrement(16); // Scroll කිරීම සුමට කිරීමට
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // show always scroll bar
+        scroll.getVerticalScrollBar().setUnitIncrement(16); 
 
         content.add(scroll, BorderLayout.CENTER);
         add(content, BorderLayout.CENTER);
