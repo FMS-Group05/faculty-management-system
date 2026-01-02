@@ -124,7 +124,7 @@ public class TimeTable extends JPanel {
             button = new JButton("Upload files");
             button.addActionListener(e -> {
                 fireEditingStopped();
-                openFileChooser(); // පරිගණකයේ ෆයිල් මැෂින් එක විවෘත වේ
+                openFileChooser(); 
             });
         }
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
