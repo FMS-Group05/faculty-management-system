@@ -80,20 +80,26 @@ public class ProfileDetailsPanel extends JPanel {
         saveButton.setBackground(PURPLE);
         saveButton.setForeground(Color.WHITE);
         saveButton.setFocusPainted(false);
+        saveButton.setContentAreaFilled(true);
         saveButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        saveButton.setPreferredSize(new Dimension(180, 38));
+        saveButton.setPreferredSize(new Dimension(180, 42));
         saveButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        saveButton.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(PURPLE, 2, true),
+                new EmptyBorder(8, 16, 8, 16)
+        ));
 
-        // Hover effect
+        // Smooth hover and click effects
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                saveButton.setBackground(PURPLE.brighter());
+                saveButton.setBackground(new Color(50, 180, 50));
             }
             @Override
             public void mouseExited(MouseEvent e) {
                 saveButton.setBackground(PURPLE);
             }
+        
         });
 
         cardGbc.gridy = labels.length;
