@@ -57,7 +57,7 @@ public class StudentDashboardView extends JFrame {
         sidebar.add(Box.createVerticalGlue());
 
         // Logout button
-        JButton btnLogout = new JButton("Logout");
+        JButton btnLogout = new JButton("Log Out");
         btnLogout.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnLogout.setFocusPainted(false);
         btnLogout.setBackground(Color.WHITE);
@@ -73,6 +73,21 @@ public class StudentDashboardView extends JFrame {
 
             // Close current window
             SwingUtilities.getWindowAncestor(btnLogout).dispose();
+        });
+
+        // Hover effect for logout button
+        btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLogout.setBackground(Color.WHITE);
+                btnLogout.setForeground(Color.RED);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLogout.setBackground(Color.WHITE);
+                btnLogout.setForeground(ColorPalette.PRIMARY);
+            }
         });
 
         sidebar.add(btnLogout);
