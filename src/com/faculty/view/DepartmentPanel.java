@@ -11,7 +11,7 @@ import java.awt.*;
 public class DepartmentPanel extends JPanel {
     private JTable table;
     private final Color PURPLE = new Color(132, 84, 255);
-    private JButton addBtn;
+    private JButton addBtn, editBtn, deleteBtn;
 
     public DepartmentPanel() {
         setLayout(new BorderLayout());
@@ -29,15 +29,19 @@ public class DepartmentPanel extends JPanel {
 
         JPanel topActions = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 10));
         topActions.setBackground(Color.WHITE);
+
         addBtn = actionButton("Add new", PURPLE);
+        editBtn = actionButton("Edit", new Color(180, 180, 180));
+        deleteBtn = actionButton("Delete", new Color(180, 180, 180));
+
         topActions.add(addBtn);
-        topActions.add(actionButton("Edit", new Color(180, 180, 180)));
-        topActions.add(actionButton("Delete", new Color(180, 180, 180)));
+        topActions.add(editBtn);
+        topActions.add(deleteBtn);
         content.add(topActions, BorderLayout.NORTH);
 
-        String[] columns = {"Name", "HOD", "Degree", "No of Staff"};
+        // Added "Department Code" as hidden column at end
+        String[] columns = { "Department", "Head of Department", "Degree", "No of staff", "Department Code" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-        for(int i = 0; i < 15; i++) model.addRow(new Object[]{"Applied Computing", "Kumar Sanga", "Engineering Technology", "15"});
 
         table = new JTable(model);
         table.setRowHeight(40);
@@ -53,7 +57,11 @@ public class DepartmentPanel extends JPanel {
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < table.getColumnCount(); i++) table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        for (int i = 0; i < table.getColumnCount(); i++)
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+
+        // Hide "Department Code" (index 4)
+        table.getColumnModel().removeColumn(table.getColumnModel().getColumn(4));
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(new LineBorder(PURPLE, 2));
@@ -83,6 +91,41 @@ public class DepartmentPanel extends JPanel {
         return btn;
     }
 
-    public JButton getAddButton() { return addBtn; }
-    public JTable getDeptTable() { return table; }
+    public JButton getAddButton() {
+        return addBtn;
+    }
+
+    public JButton getEditButton() {
+        return editBtn;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteBtn;
+    }
+
+    public JTable getDepartmentTable() {
+        return table;
+    }
+
+    public String getSelectedDeptCode() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            int modelRow = table.convertRowIndexToModel(selectedRow);
+            return model.getValueAt(modelRow, 4).toString();
+        }
+        return null;
+    }
+
+    public JTable getDeptTable() {
+        return table;
+    }
+
+    public void setData(Object[][] values) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Object[] row : values) {
+            model.addRow(row);
+        }
+    }
 }

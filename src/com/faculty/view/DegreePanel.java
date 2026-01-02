@@ -11,7 +11,7 @@ import java.awt.*;
 public class DegreePanel extends JPanel {
     private JTable table;
     private final Color PURPLE = new Color(132, 84, 255);
-    private JButton addBtn;
+    private JButton addBtn, editBtn, deleteBtn;
 
     public DegreePanel() {
         setLayout(new BorderLayout());
@@ -30,14 +30,16 @@ public class DegreePanel extends JPanel {
         JPanel topActions = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 10));
         topActions.setBackground(Color.WHITE);
         addBtn = actionButton("Add new", PURPLE);
+        editBtn = actionButton("Edit", new Color(180, 180, 180));
+        deleteBtn = actionButton("Delete", new Color(180, 180, 180));
+
         topActions.add(addBtn);
-        topActions.add(actionButton("Edit", new Color(180, 180, 180)));
-        topActions.add(actionButton("Delete", new Color(180, 180, 180)));
+        topActions.add(editBtn);
+        topActions.add(deleteBtn);
         content.add(topActions, BorderLayout.NORTH);
 
-        String[] columns = {"Degree", "Department", "No of Students"};
+        String[] columns = { "Degree", "Department", "No of Students" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-        for(int i = 0; i < 15; i++) model.addRow(new Object[]{"Engineering Technology", "Applied Computing", "375"});
 
         table = new JTable(model);
         table.setRowHeight(40);
@@ -53,7 +55,8 @@ public class DegreePanel extends JPanel {
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < table.getColumnCount(); i++) table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        for (int i = 0; i < table.getColumnCount(); i++)
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(new LineBorder(PURPLE, 2));
@@ -83,6 +86,36 @@ public class DegreePanel extends JPanel {
         return btn;
     }
 
-    public JButton getAddButton() { return addBtn; }
-    public JTable getDegreeTable() { return table; }
+    public JButton getAddButton() {
+        return addBtn;
+    }
+
+    public JButton getEditButton() {
+        return editBtn;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteBtn;
+    }
+
+    public JTable getDegreeTable() {
+        return table;
+    }
+
+    public String getSelectedDegree() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            // Degree Name is at column 0 in view and model
+            return table.getValueAt(selectedRow, 0).toString();
+        }
+        return null;
+    }
+
+    public void setData(Object[][] values) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Object[] row : values) {
+            model.addRow(row);
+        }
+    }
 }

@@ -42,12 +42,13 @@ public class LecturerPanel extends JPanel {
         content.add(topActions, BorderLayout.NORTH);
 
         // Table Configuration with purple lines
-        String[] columns = {"Full Name", "Department", "Courses teaching", "Email", "Mobile Number"};
+        // Added "Username" as the last column (will be hidden)
+        String[] columns = { "Full Name", "Department", "Courses teaching", "Email", "Mobile Number", "Username" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-
-        for(int i = 0; i < 15; i++) {
-            model.addRow(new Object[]{"Kumar Sangakkara", "Software Engineering", "ETEC 21062", "kumars@kln.ac.lk", "0123456789"});
+        for (int i = 0; i < 15; i++) {
+            model.addRow(new Object[] { "Kumar Sangakkara", "Software Engineering", "ETEC 21062", "kumars@kln.ac.lk",
+                    "0123456789" });
         }
 
         table = new JTable(model);
@@ -56,12 +57,14 @@ public class LecturerPanel extends JPanel {
         table.setGridColor(PURPLE);
         table.setShowGrid(true);
 
-
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+
+        // Hide the "Username" column (index 5)
+        table.getColumnModel().removeColumn(table.getColumnModel().getColumn(5));
 
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -73,7 +76,6 @@ public class LecturerPanel extends JPanel {
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(new LineBorder(PURPLE, 2));
         scroll.getViewport().setBackground(Color.WHITE);
-
 
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroll.getVerticalScrollBar().setBackground(Color.WHITE);
@@ -106,9 +108,42 @@ public class LecturerPanel extends JPanel {
     }
 
     // Getters for AdminController
-    public JTable getLecturerTable() { return table; }
-    public JButton getAddButton() { return addBtn; }
-    public JButton getEditButton() { return editBtn; }
-    public JButton getDeleteButton() { return deleteBtn; }
-    public JButton getSaveButton() { return saveBtn; }
+    public JTable getLecturerTable() {
+        return table;
+    }
+
+    public JButton getAddButton() {
+        return addBtn;
+    }
+
+    public JButton getEditButton() {
+        return editBtn;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteBtn;
+    }
+
+    public JButton getSaveButton() {
+        return saveBtn;
+    }
+
+    public void setData(Object[][] values) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Object[] row : values) {
+            model.addRow(row);
+        }
+    }
+
+    public String getSelectedUsername() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            // "Username" is at index 5 in the model
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            int modelRow = table.convertRowIndexToModel(selectedRow);
+            return model.getValueAt(modelRow, 5).toString();
+        }
+        return null;
+    }
 }

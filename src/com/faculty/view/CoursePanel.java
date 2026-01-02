@@ -37,9 +37,8 @@ public class CoursePanel extends JPanel {
         topActions.add(deleteBtn);
         content.add(topActions, BorderLayout.NORTH);
 
-        String[] columns = {"Course code", "Course name", "Credits", "Lecturer"};
+        String[] columns = { "Course code", "Course name", "Credits", "Lecturer" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-        for(int i = 0; i < 15; i++) model.addRow(new Object[]{"ETEC 21062", "OOP", "2", "Kumar Sanga"});
 
         table = new JTable(model);
         table.setRowHeight(40);
@@ -55,7 +54,8 @@ public class CoursePanel extends JPanel {
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < table.getColumnCount(); i++) table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        for (int i = 0; i < table.getColumnCount(); i++)
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(new LineBorder(PURPLE, 2));
@@ -85,6 +85,36 @@ public class CoursePanel extends JPanel {
         return btn;
     }
 
-    public JButton getAddButton() { return addBtn; }
-    public JTable getCourseTable() { return table; }
+    public JButton getAddButton() {
+        return addBtn;
+    }
+
+    public JButton getEditButton() {
+        return editBtn;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteBtn;
+    }
+
+    public JTable getCourseTable() {
+        return table;
+    }
+
+    public void setData(Object[][] values) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Object[] row : values) {
+            model.addRow(row);
+        }
+    }
+
+    public String getSelectedCourseCode() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            // Course Code is at column 0 in view and model
+            return table.getValueAt(selectedRow, 0).toString();
+        }
+        return null;
+    }
 }

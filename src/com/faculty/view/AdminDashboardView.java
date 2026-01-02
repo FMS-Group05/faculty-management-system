@@ -1,5 +1,6 @@
 package com.faculty.view;
 
+import com.faculty.controller.AdminController;
 import com.faculty.model.User;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,9 +13,7 @@ public class AdminDashboardView extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
 
-
     private JButton studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn, timeTableBtn, logoutBtn;
-
 
     private StudentPanel studentPanel;
     private LecturerPanel lecturerPanel;
@@ -31,13 +30,10 @@ public class AdminDashboardView extends JFrame {
         getContentPane().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
 
-
         add(sidebar(), BorderLayout.WEST);
-
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
-
 
         studentPanel = new StudentPanel();
         lecturerPanel = new LecturerPanel();
@@ -55,8 +51,8 @@ public class AdminDashboardView extends JFrame {
 
         add(cardPanel, BorderLayout.CENTER);
 
-
         initNavigation();
+        new AdminController(this);
     }
 
     private JPanel sidebar() {
@@ -71,7 +67,6 @@ public class AdminDashboardView extends JFrame {
         welcome.setBorder(new EmptyBorder(25, 0, 15, 0));
         panel.add(welcome);
 
-
         studentsBtn = menuButton("Students", "\uD83D\uDC64", true);
         lecturersBtn = menuButton("Lecturers", "\uD83D\uDC65", false);
         coursesBtn = menuButton("Courses", "\uD83D\uDCD6", false);
@@ -85,7 +80,6 @@ public class AdminDashboardView extends JFrame {
         panel.add(departmentsBtn);
         panel.add(degreesBtn);
         panel.add(timeTableBtn);
-
 
         logoutBtn = new JButton("Log out");
         logoutBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -123,7 +117,7 @@ public class AdminDashboardView extends JFrame {
         departmentsBtn.addActionListener(e -> switchPanel("Departments", departmentsBtn));
         degreesBtn.addActionListener(e -> switchPanel("Degrees", degreesBtn));
         timeTableBtn.addActionListener(e -> switchPanel("TimeTable", timeTableBtn)); // ✅ Navigation එක එක් කිරීම
-        
+
         logoutBtn.addActionListener(e -> {
             dispose();
             new LoginView().setVisible(true);
@@ -136,18 +130,59 @@ public class AdminDashboardView extends JFrame {
     }
 
     private void updateSidebarStyles(JButton activeBtn) {
-        JButton[] buttons = {studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn, timeTableBtn};
+        JButton[] buttons = { studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn, timeTableBtn };
         for (JButton btn : buttons) {
             btn.setForeground(btn == activeBtn ? PURPLE : new Color(160, 160, 160));
         }
     }
 
     // Getters for Controller
-    public StudentPanel getStudentPanel() { return studentPanel; }
-    public LecturerPanel getLecturerPanel() { return lecturerPanel; }
-    public CoursePanel getCoursePanel() { return coursePanel; }
-    public DepartmentPanel getDepartmentPanel() { return departmentPanel; }
-    public DegreePanel getDegreePanel() { return degreePanel; }
-    public TimeTable getTimeTablePanel() { return timeTablePanel; } // ✅ නව Getter
-    public JButton getLogoutButton() { return logoutBtn; }
+    public StudentPanel getStudentPanel() {
+        return studentPanel;
+    }
+
+    public LecturerPanel getLecturerPanel() {
+        return lecturerPanel;
+    }
+
+    public CoursePanel getCoursePanel() {
+        return coursePanel;
+    }
+
+    public DepartmentPanel getDepartmentPanel() {
+        return departmentPanel;
+    }
+
+    public DegreePanel getDegreePanel() {
+        return degreePanel;
+    }
+
+    public TimeTable getTimeTablePanel() {
+        return timeTablePanel;
+    } // ✅ නව Getter
+
+    public JButton getLogoutButton() {
+        return logoutBtn;
+    }
+
+    // Navigation Buttons
+    public JButton getStudentsBtn() {
+        return studentsBtn;
+    }
+
+    public JButton getLecturersBtn() {
+        return lecturersBtn;
+    }
+
+    public JButton getCoursesBtn() {
+        return coursesBtn;
+    }
+
+    public JButton getDepartmentsBtn() {
+        return departmentsBtn;
+    }
+
+    public JButton getDegreesBtn() {
+        return degreesBtn;
+    }
 }
