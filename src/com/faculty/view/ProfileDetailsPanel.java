@@ -1,5 +1,7 @@
 package com.faculty.view;
 
+import com.faculty.controller.StudentDetailsController;
+import com.faculty.model.User;
 import com.faculty.util.ColorPalette;
 
 import javax.swing.*;
@@ -13,7 +15,7 @@ public class ProfileDetailsPanel extends JPanel {
     private final String[] labels = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
     private final JTextField[] fields = new JTextField[labels.length];
 
-    public ProfileDetailsPanel() {
+    public ProfileDetailsPanel(User user) {
         setLayout(new GridBagLayout());
         setBackground(new Color(245, 245, 250)); // subtle background
 
@@ -112,18 +114,8 @@ public class ProfileDetailsPanel extends JPanel {
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         add(cardPanel, gbc);
-    }
 
-    // ---------- Main method ----------
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Profile Details");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1200, 550); // slightly smaller height
-            frame.setLocationRelativeTo(null);
-            frame.add(new ProfileDetailsPanel());
-            frame.setVisible(true);
-        });
+        new StudentDetailsController(this, user);
     }
 
     public JButton getSaveButton() { return saveButton; }

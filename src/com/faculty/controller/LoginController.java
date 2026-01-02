@@ -67,7 +67,7 @@ public class LoginController {
                 case "Student" -> {
                     StudentDashboardView s = new StudentDashboardView(user);
                     s.setVisible(true);
-                    new StudentController(s);
+                    // new StudentDetailsController(s);
                 }
 
                 default -> JOptionPane.showMessageDialog(null, "Unknown role: " + role);

@@ -1,5 +1,8 @@
 package com.faculty.view;
 
+import com.faculty.model.User;
+import com.faculty.controller.StudentCourseController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -8,15 +11,31 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 
 public class CourseEntrolledPanel extends JPanel {
+    private DefaultTableModel model;
+    private Object[][] data = {
+            { "CSCI 21062", "OOP", "3", "A+" },
+            { "CSCI 21052", "SE", "2", "B" },
+            { "CSCI 21042", "ADBS", "2", "A" },
+            { "CSCI 21032", "STAT", "3", "D" },
+            { "CSCI 21022", "ENGLISH", "2", "C" },
+            { "CSCI 21012", "MANAGEMNET", "2", "B" },
+            { "CSCI 21062", "NETWORKING", "2", "A" },
+            { "CSCI 21052", "PROJECT", "2", "-B" },
+            { "CSCI 21042", "ADBS", "2", "A" },
+            { "CSCI 21032", "STAT", "3", "D+" },
+            { "CSCI 21022", "ENGLISH", "2", "C" },
+            { "CSCI 21012", "MANAGEMNET II", "2", "B" }
 
-    public CourseEntrolledPanel() {
+    };
+
+    public CourseEntrolledPanel(User user) {
         // 1. Basic Panel Setup
         setBackground(Color.WHITE);
         setLayout(new BorderLayout(0, 20)); // Vgap of 20px
         setBorder(new EmptyBorder(20, 40, 40, 40)); // Padding around the whole panel
 
         // Define the Theme Color (Purple)
-        Color themeColor = new Color(138, 79, 255); 
+        Color themeColor = new Color(138, 79, 255);
 
         // 2. The Header Title ("Courses Enrolled")
         JLabel titleLabel = new JLabel("Courses Enrolled", SwingConstants.CENTER);
@@ -25,27 +44,11 @@ public class CourseEntrolledPanel extends JPanel {
         add(titleLabel, BorderLayout.NORTH);
 
         // 3. Data for the Table (Mock Data based on your image)
-        String[] columnNames = {"Course code", "Course name", "Credits", "Grade"};
-
-        Object[][] data = {
-                {"CSCI 21062", "OOP", "3", "A+"},
-                {"CSCI 21052", "SE", "2", "B"},
-                {"CSCI 21042", "ADBS", "2", "A"},
-                {"CSCI 21032", "STAT", "3", "D"},
-                {"CSCI 21022", "ENGLISH", "2", "C"},
-                {"CSCI 21012", "MANAGEMNET", "2", "B"},
-                {"CSCI 21062", "NETWORKING", "2", "A"},
-                {"CSCI 21052", "PROJECT", "2", "-B"},
-                {"CSCI 21042", "ADBS", "2", "A"},
-                {"CSCI 21032", "STAT", "3", "D+"},
-                {"CSCI 21022", "ENGLISH", "2", "C"},
-                {"CSCI 21012", "MANAGEMNET II", "2", "B"}
-
-        };
+        String[] columnNames = { "Course code", "Course name", "Credits", "Grade" };
 
         // 4. Create the Table Model
         // We override isCellEditable to make the table read-only
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+        this.model = new DefaultTableModel(data, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -77,7 +80,7 @@ public class CourseEntrolledPanel extends JPanel {
         header.setBorder(BorderFactory.createLineBorder(themeColor));
 
         // Re-apply center renderer to header as well
-        ((DefaultTableCellRenderer)header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
         // 7. Add Table to ScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
@@ -85,5 +88,16 @@ public class CourseEntrolledPanel extends JPanel {
         scrollPane.setBorder(BorderFactory.createLineBorder(themeColor, 1)); // Border around the whole table list
 
         add(scrollPane, BorderLayout.CENTER);
+
+        new StudentCourseController(this, user);
+    }
+
+    public void setData(Object[][] newData) {
+        if (newData == null || model == null)
+            return;
+        model.setRowCount(0); // Clear existing rows
+        for (Object[] row : newData) {
+            model.addRow(row);
+        }
     }
 }

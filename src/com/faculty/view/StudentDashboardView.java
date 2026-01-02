@@ -10,13 +10,16 @@ import java.awt.event.ActionEvent;
 public class StudentDashboardView extends JFrame {
 
     private final JPanel contentPanel;
-    private final ProfileDetailsPanel profilePanel = new ProfileDetailsPanel();
-    private final TimeTablePanel timetablePanel = new TimeTablePanel();
-    private final CourseEntrolledPanel courseEnrolledPanel = new CourseEntrolledPanel();
+    private final ProfileDetailsPanel profilePanel;
+    private final TimeTablePanel timetablePanel;
+    private final CourseEntrolledPanel courseEnrolledPanel;
     private User user;
 
     public StudentDashboardView(User user) {
         this.user = user;
+        profilePanel = new ProfileDetailsPanel(user);
+        timetablePanel = new TimeTablePanel(user);
+        courseEnrolledPanel = new CourseEntrolledPanel(user);
         setTitle("Student Dashboard");
         setSize(900, 500);
         setLocationRelativeTo(null);
