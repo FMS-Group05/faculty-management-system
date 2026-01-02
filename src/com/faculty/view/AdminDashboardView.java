@@ -12,13 +12,16 @@ public class AdminDashboardView extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
 
-    private JButton studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn, logoutBtn;
+
+    private JButton studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn, timeTableBtn, logoutBtn;
+
 
     private StudentPanel studentPanel;
     private LecturerPanel lecturerPanel;
     private CoursePanel coursePanel;
     private DepartmentPanel departmentPanel;
     private DegreePanel degreePanel;
+    private TimeTable timeTablePanel;
 
     public AdminDashboardView(User user) {
         setTitle("Faculty Management System - Admin");
@@ -41,12 +44,14 @@ public class AdminDashboardView extends JFrame {
         coursePanel = new CoursePanel();
         departmentPanel = new DepartmentPanel();
         degreePanel = new DegreePanel();
+        timeTablePanel = new TimeTable(); // ✅ නව TimeTable පැනලය initialize කිරීම
 
         cardPanel.add(studentPanel, "Students");
         cardPanel.add(lecturerPanel, "Lecturers");
         cardPanel.add(coursePanel, "Courses");
         cardPanel.add(departmentPanel, "Departments");
         cardPanel.add(degreePanel, "Degrees");
+        cardPanel.add(timeTablePanel, "TimeTable"); // ✅ CardLayout එකට එක් කිරීම
 
         add(cardPanel, BorderLayout.CENTER);
 
@@ -67,17 +72,19 @@ public class AdminDashboardView extends JFrame {
         panel.add(welcome);
 
 
-        studentsBtn = menuButton("Students", "\uD83D\uDC64", true);   // 👤
-        lecturersBtn = menuButton("Lecturers", "\uD83D\uDC65", false); // 👥
-        coursesBtn = menuButton("Courses", "\uD83D\uDCD6", false);     // 📖
-        departmentsBtn = menuButton("Departments", "\uD83C\uDFDB", false); // 🏛
-        degreesBtn = menuButton("Degrees", "\uD83C\uDF93", false);     // 🎓
+        studentsBtn = menuButton("Students", "\uD83D\uDC64", true);
+        lecturersBtn = menuButton("Lecturers", "\uD83D\uDC65", false);
+        coursesBtn = menuButton("Courses", "\uD83D\uDCD6", false);
+        departmentsBtn = menuButton("Departments", "\uD83C\uDFDB", false);
+        degreesBtn = menuButton("Degrees", "\uD83C\uDF93", false);
+        timeTableBtn = menuButton("Time Table", "\uD83D\uDCC5", false); // ✅ 📅 Icon එක සමඟ නව බොත්තම
 
         panel.add(studentsBtn);
         panel.add(lecturersBtn);
         panel.add(coursesBtn);
         panel.add(departmentsBtn);
         panel.add(degreesBtn);
+        panel.add(timeTableBtn);
 
 
         logoutBtn = new JButton("Log out");
@@ -110,12 +117,12 @@ public class AdminDashboardView extends JFrame {
     }
 
     private void initNavigation() {
-
         studentsBtn.addActionListener(e -> switchPanel("Students", studentsBtn));
         lecturersBtn.addActionListener(e -> switchPanel("Lecturers", lecturersBtn));
         coursesBtn.addActionListener(e -> switchPanel("Courses", coursesBtn));
         departmentsBtn.addActionListener(e -> switchPanel("Departments", departmentsBtn));
         degreesBtn.addActionListener(e -> switchPanel("Degrees", degreesBtn));
+        timeTableBtn.addActionListener(e -> switchPanel("TimeTable", timeTableBtn)); // ✅ Navigation එක එක් කිරීම
     }
 
     private void switchPanel(String name, JButton activeBtn) {
@@ -124,17 +131,18 @@ public class AdminDashboardView extends JFrame {
     }
 
     private void updateSidebarStyles(JButton activeBtn) {
-        JButton[] buttons = {studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn};
+        JButton[] buttons = {studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn, timeTableBtn};
         for (JButton btn : buttons) {
             btn.setForeground(btn == activeBtn ? PURPLE : new Color(160, 160, 160));
         }
     }
 
-    // Getters for Controller to access Panels
+    // Getters for Controller
     public StudentPanel getStudentPanel() { return studentPanel; }
     public LecturerPanel getLecturerPanel() { return lecturerPanel; }
     public CoursePanel getCoursePanel() { return coursePanel; }
     public DepartmentPanel getDepartmentPanel() { return departmentPanel; }
     public DegreePanel getDegreePanel() { return degreePanel; }
+    public TimeTable getTimeTablePanel() { return timeTablePanel; } // ✅ නව Getter
     public JButton getLogoutButton() { return logoutBtn; }
 }
