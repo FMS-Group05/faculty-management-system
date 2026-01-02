@@ -34,6 +34,12 @@ public class CourseEntrolledPanel extends JPanel {
                 {"CSCI 21032", "STAT", "2", "D"},
                 {"CSCI 21022", "ENGLISH", "2", "C"},
                 {"CSCI 21012", "MANAGEMNET", "2", "B"},
+                {"CSCI 21062", "OOP", "2", "A+"},
+                {"CSCI 21052", "SE", "2", "B"},
+                {"CSCI 21042", "ADBS", "2", "A"},
+                {"CSCI 21032", "STAT", "2", "D"},
+                {"CSCI 21022", "ENGLISH", "2", "C"},
+                {"CSCI 21012", "MANAGEMNET", "2", "B"}
 
         };
 
