@@ -39,4 +39,17 @@ public class StudentDetailsDAO {
         }
     }
 
+    public String getStudentDegree(String username) throws SQLException {
+        String sql = "SELECT degree FROM SDetails WHERE userName=?";
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("degree");
+                }
+            }
+        }
+        return null;
+    }
 }

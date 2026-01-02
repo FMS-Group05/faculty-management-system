@@ -10,6 +10,9 @@ import javax.swing.table.JTableHeader;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class TimeTable extends JPanel {
     private JTable table;
@@ -42,14 +45,9 @@ public class TimeTable extends JPanel {
         topActions.add(deleteBtn);
         content.add(topActions, BorderLayout.NORTH);
 
-        // Table Model with Sample Rows to Check Scrolling
-        String[] columns = {"Degree", "Year", "Image"};
+        // Table Model
+        String[] columns = { "Degree", "Year", "Image" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-
-
-        for (int i = 1; i <= 15; i++) {
-            model.addRow(new Object[]{"Degree " + i, i, "Upload files"});
-        }
 
         table = new JTable(model);
         table.setRowHeight(45);
@@ -70,7 +68,7 @@ public class TimeTable extends JPanel {
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(new LineBorder(PURPLE, 2));
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // show always scroll bar
-        scroll.getVerticalScrollBar().setUnitIncrement(16); 
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
 
         content.add(scroll, BorderLayout.CENTER);
         add(content, BorderLayout.CENTER);
@@ -88,7 +86,6 @@ public class TimeTable extends JPanel {
         add(bottom, BorderLayout.SOUTH);
     }
 
-
     public void openFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select Time Table Image");
@@ -97,18 +94,30 @@ public class TimeTable extends JPanel {
 
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+
             int row = table.getSelectedRow();
             if (row != -1) {
-                table.setValueAt(file.getName(), row, 2);
+                // Store absolute path temporarily in visual model; Controller will handle copy
+                // on Save
+                table.setValueAt(file.getAbsolutePath(), row, 2);
             }
         }
     }
 
     // --- Button Renderer ---
     class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() { setOpaque(true); }
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null || value.toString().isEmpty()) ? "Upload files" : value.toString());
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            String text = "Upload files";
+            if (value != null && !value.toString().isEmpty()) {
+                File f = new File(value.toString());
+                text = f.getName();
+            }
+            setText(text);
             setBackground(Color.WHITE);
             setForeground(PURPLE);
             setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -119,15 +128,18 @@ public class TimeTable extends JPanel {
     // --- Button Editor (Click Access) ---
     class ButtonEditor extends DefaultCellEditor {
         protected JButton button;
+
         public ButtonEditor(JCheckBox checkBox) {
             super(checkBox);
             button = new JButton("Upload files");
             button.addActionListener(e -> {
                 fireEditingStopped();
-                openFileChooser(); 
+                openFileChooser();
             });
         }
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+                int column) {
             return button;
         }
     }
@@ -142,7 +154,42 @@ public class TimeTable extends JPanel {
         return btn;
     }
 
-    public JButton getAddButton() { return addBtn; }
-    public JButton getSaveButton() { return saveBtn; }
-    public JTable getTable() { return table; }
+    public JButton getAddButton() {
+        return addBtn;
+    }
+
+    public JButton getEditButton() {
+        return editBtn;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteBtn;
+    }
+
+    public JButton getSaveButton() {
+        return saveBtn;
+    }
+
+    public JTable getTable() {
+        return table;
+    }
+
+    public void setData(Object[][] values) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Object[] row : values) {
+            model.addRow(row);
+        }
+    }
+
+    public Object[] getSelectedTimeTable() {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            Object degree = table.getValueAt(row, 0);
+            Object year = table.getValueAt(row, 1);
+            Object image = table.getValueAt(row, 2);
+            return new Object[] { degree, year, image };
+        }
+        return null;
+    }
 }

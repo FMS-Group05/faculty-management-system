@@ -75,3 +75,11 @@ CREATE TABLE CourseLec (
     FOREIGN KEY (ccode) REFERENCES courses(ccode),
     FOREIGN KEY (Luser) REFERENCES users(username)
 );
+
+CREATE TABLE TimeTables (
+    degree VARCHAR(50),
+    year INT,
+    ImagePath VARCHAR(500),
+    PRIMARY KEY (degree, year),
+    FOREIGN KEY (degree) REFERENCES Degrees(degree)
+);

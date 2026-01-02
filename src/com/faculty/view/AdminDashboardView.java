@@ -185,4 +185,8 @@ public class AdminDashboardView extends JFrame {
     public JButton getDegreesBtn() {
         return degreesBtn;
     }
+
+    public JButton getTimeTableBtn() {
+        return timeTableBtn;
+    }
 }

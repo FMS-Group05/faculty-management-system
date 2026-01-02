@@ -20,12 +20,25 @@ public class StudentDashboardView extends JFrame {
     private JButton btnProfile, btnTimetable, btnCourses, btnLogout;
     private final Color PURPLE = new Color(132, 84, 255);
 
+    // Controllers
+    @SuppressWarnings("unused")
+    private com.faculty.controller.StudentTimeTableController timeTableController;
+
     public StudentDashboardView(User user) {
         this.user = user;
 
         profilePanel = new ProfileDetailsPanel(user);
         timetablePanel = new TimeTablePanel(user);
         courseEnrolledPanel = new CourseEntrolledPanel(user);
+
+        // Initialize Timetable logic
+        timeTableController = new com.faculty.controller.StudentTimeTableController(timetablePanel, user);
+        // Note: Profile logic is handled inside StudentDetailsController (where is it
+        // instantiated?)
+        // The file list showed StudentDetailsController usage but I don't see it here.
+        // AdminDashboardView creates controllers. StudentDashboardView might need to
+        // behave similarly.
+        // For now, I only handle TimeTable as requested.
 
         setTitle("Student Dashboard");
         setSize(1000, 600);
@@ -75,7 +88,7 @@ public class StudentDashboardView extends JFrame {
 
             // Open login/signup window
             LoginView loginView = new LoginView();
-            loginView.setVisible(true);  // opens login window (can default to signup)
+            loginView.setVisible(true); // opens login window (can default to signup)
 
             // Close current dashboard
             dispose();
@@ -154,8 +167,19 @@ public class StudentDashboardView extends JFrame {
     }
 
     // ===== GETTERS =====
-    public ProfileDetailsPanel getProfilePanel() { return profilePanel; }
-    public TimeTablePanel getTimetablePanel() { return timetablePanel; }
-    public CourseEntrolledPanel getCourseEnrolledPanel() { return courseEnrolledPanel; }
-    public User getUser() { return user; }
+    public ProfileDetailsPanel getProfilePanel() {
+        return profilePanel;
+    }
+
+    public TimeTablePanel getTimetablePanel() {
+        return timetablePanel;
+    }
+
+    public CourseEntrolledPanel getCourseEnrolledPanel() {
+        return courseEnrolledPanel;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }

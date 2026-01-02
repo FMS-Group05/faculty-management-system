@@ -23,8 +23,8 @@ public class LoginController {
 
             String username = view.getSignUpUsername();
             String password = view.getSignUpPassword();
-            String confirm  = view.getSignUpConfirm();
-            String role     = view.getSelectedRole();
+            String confirm = view.getSignUpConfirm();
+            String role = view.getSelectedRole();
 
             if (!password.equals(confirm)) {
                 JOptionPane.showMessageDialog(view, "Passwords do not match");
@@ -35,10 +35,10 @@ public class LoginController {
 
             JOptionPane.showMessageDialog(
                     view,
-                    ok ? "Registration successful" : "Username already exists"
-            );
+                    ok ? "Registration successful" : "Username already exists");
 
-            if (ok) view.clearSignUpFields();
+            if (ok)
+                view.clearSignUpFields();
         });
 
         // ---------------- SIGN IN ----------------
