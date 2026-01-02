@@ -2,7 +2,7 @@ package com.faculty.view;
 
 import com.faculty.controller.StudentDetailsController;
 import com.faculty.model.User;
-import com.faculty.util.ColorPalette;
+//import com.faculty.util.ColorPalette;
 
 import javax.swing.*;
 import javax.swing.border.*;
