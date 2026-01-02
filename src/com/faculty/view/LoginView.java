@@ -14,7 +14,7 @@ public class LoginView extends JFrame {
 
     // --- Colors & Fonts ---
     private final Color PRIMARY_COLOR = new Color(110, 56, 240); // Richer Purple
-    private final Color HOVER_COLOR = new Color(90, 40, 210);
+    private final Color HOVER_COLOR = new Color(50, 180, 50);
     private final Color BG_COLOR = Color.WHITE;
     private final Color TEXT_COLOR = new Color(50, 50, 50);
     private final Color PLACEHOLDER_COLOR = new Color(150, 150, 150);
