@@ -1,70 +1,79 @@
 CREATE DATABASE FMS;
 USE FMS;
 
--- Core User Table
-CREATE TABLE Users (
-    userName VARCHAR(50) PRIMARY KEY,
-    pws VARCHAR(255),
+-- 1. Create independent tables first
+CREATE TABLE users (
+    username VARCHAR(50) PRIMARY KEY,
+    pws VARCHAR(255) NOT NULL,
     Role VARCHAR(20)
 );
 
--- Department Table
-CREATE TABLE Dept (
-    deptN VARCHAR(10) PRIMARY KEY,
-    name VARCHAR(100),
-    HOD VARCHAR(100),
-    degree VARCHAR(50),
-    NoOfStaf INT
-);
-
--- Degrees Table
-CREATE TABLE Degrees (
-    dgree VARCHAR(50) PRIMARY KEY,
-    dept VARCHAR(10),
-    NoOfStd INT,
-    FOREIGN KEY (dept) REFERENCES Dept(deptN)
-);
-
--- Student Details
-CREATE TABLE SDetails (
-    STDID VARCHAR(20) PRIMARY KEY,
-    userName VARCHAR(50),
-    Name VARCHAR(100),
-    degree VARCHAR(50),
-    email VARCHAR(100),
-    mobile VARCHAR(15),
-    FOREIGN KEY (userName) REFERENCES Users(userName),
-    FOREIGN KEY (degree) REFERENCES Degrees(dgree)
-);
-
--- Lecturer Details
-CREATE TABLE LDetails (
-    userName VARCHAR(50) PRIMARY KEY,
-    Name VARCHAR(100),
-    deptN VARCHAR(10),
-    email VARCHAR(100),
-    mobile VARCHAR(15),
-    FOREIGN KEY (userName) REFERENCES Users(userName),
-    FOREIGN KEY (deptN) REFERENCES Dept(deptN)
-);
-
--- Courses Table
-CREATE TABLE Courses (
+CREATE TABLE courses (
     ccode VARCHAR(10) PRIMARY KEY,
     cname VARCHAR(100),
     credits INT,
-    Luser VARCHAR(50),
-    time INT,
-
-    FOREIGN KEY (Luser) REFERENCES LDetails(userName)
+    day VARCHAR(20),
+    time VARCHAR(50)
 );
 
--- Enrollment (Linking Users to Courses)
+CREATE TABLE Departments (
+    dptN VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(100),
+    HOD VARCHAR(100),
+    noOfStaf INT
+);
+
+CREATE TABLE Degrees (
+    degree VARCHAR(50) PRIMARY KEY,
+    NoOfStd INT
+);
+
+-- 2. Create tables with Foreign Key dependencies
+CREATE TABLE SDetails (
+    userName VARCHAR(50) PRIMARY KEY,
+    Name VARCHAR(100),
+    STDID VARCHAR(20) UNIQUE,
+    degree VARCHAR(50),
+    email VARCHAR(100),
+    mobile VARCHAR(15),
+    FOREIGN KEY (userName) REFERENCES users(username),
+    FOREIGN KEY (degree) REFERENCES Degrees(degree)
+);
+
+CREATE TABLE LDetails (
+    userName VARCHAR(50) PRIMARY KEY,
+    Name VARCHAR(100),
+    dpt VARCHAR(10),
+    Ccode VARCHAR(10),
+    email VARCHAR(100),
+    mobile VARCHAR(15),
+    FOREIGN KEY (userName) REFERENCES users(username),
+    FOREIGN KEY (dpt) REFERENCES Departments(dptN),
+    FOREIGN KEY (Ccode) REFERENCES courses(ccode)
+);
+
+-- 3. Create Junction/Relationship tables
 CREATE TABLE EnrolledCourses (
     Uname VARCHAR(50),
     Ccode VARCHAR(10),
     grade VARCHAR(2),
     PRIMARY KEY (Uname, Ccode),
-    FOREIGN KEY (Uname) REFERENCES Users(userName),
-    FOREIGN KEY (Ccode) REFERENCES Courses(ccode)
+    FOREIGN KEY (Uname) REFERENCES users(username),
+    FOREIGN KEY (Ccode) REFERENCES courses(ccode)
+);
+
+CREATE TABLE deptDegrees (
+    dptN VARCHAR(10),
+    dgree VARCHAR(50),
+    PRIMARY KEY (dptN, dgree),
+    FOREIGN KEY (dptN) REFERENCES Departments(dptN),
+    FOREIGN KEY (dgree) REFERENCES Degrees(degree)
+);
+
+CREATE TABLE CourseLec (
+    ccode VARCHAR(10),
+    Luser VARCHAR(50),
+    PRIMARY KEY (ccode, Luser),
+    FOREIGN KEY (ccode) REFERENCES courses(ccode),
+    FOREIGN KEY (Luser) REFERENCES users(username)
 );
