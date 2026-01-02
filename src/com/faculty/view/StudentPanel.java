@@ -42,10 +42,12 @@ public class StudentPanel extends JPanel {
         content.add(topActions, BorderLayout.NORTH);
 
         // Table Configuration with purple lines
-        String[] columns = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
+        // Added "Username" as the last column (will be hidden)
+        String[] columns = { "Full Name", "Student ID", "Degree", "Email", "Mobile Number", "Username" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-        for(int i=0; i<10; i++){
-            model.addRow(new Object[]{"Kumar Sangakkara", "ET/2022/007", "Engineering Technology", "kumars@kln.ac.lk", "0123456789"});
+        for (int i = 0; i < 10; i++) {
+            model.addRow(new Object[] { "Kumar Sangakkara", "ET/2022/007", "Engineering Technology", "kumars@kln.ac.lk",
+                    "0123456789" });
         }
 
         table = new JTable(model);
@@ -59,6 +61,9 @@ public class StudentPanel extends JPanel {
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+
+        // Hide the "Username" column (index 5)
+        table.getColumnModel().removeColumn(table.getColumnModel().getColumn(5));
 
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -101,9 +106,44 @@ public class StudentPanel extends JPanel {
     }
 
     // Getters for AdminController
-    public JTable getStudentTable() { return table; }
-    public JButton getAddButton() { return addBtn; }
-    public JButton getEditButton() { return editBtn; }
-    public JButton getDeleteButton() { return deleteBtn; }
-    public JButton getSaveButton() { return saveBtn; }
+    public JTable getStudentTable() {
+        return table;
+    }
+
+    public JButton getAddButton() {
+        return addBtn;
+    }
+
+    public JButton getEditButton() {
+        return editBtn;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteBtn;
+    }
+
+    public JButton getSaveButton() {
+        return saveBtn;
+    }
+
+    public void setData(Object[][] values) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Object[] row : values) {
+            model.addRow(row);
+        }
+    }
+
+    public String getSelectedUsername() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            // "Username" is at index 5 in the model
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            // We need to convert view index to model index in case of sorting (if enabled
+            // later)
+            int modelRow = table.convertRowIndexToModel(selectedRow);
+            return model.getValueAt(modelRow, 5).toString();
+        }
+        return null;
+    }
 }

@@ -12,9 +12,9 @@ INSERT INTO Degrees (degree, NoOfStd) VALUES
 ('BSc Computer Science', 120);
 
 -- Add your current courses with Day and Time
-INSERT INTO courses (ccode, cname, credits, time, day) VALUES 
-('CSCI 21001', 'Object Oriented Programming', 3, '09:00 - 11:00', 'Monday'),
-('CSCI 21002', 'Software Engineering', 4, '13:00 - 15:00', 'Wednesday');
+INSERT INTO courses (ccode, cname, credits) VALUES 
+('CSCI 21001', 'Object Oriented Programming', 3),
+('CSCI 21002', 'Software Engineering', 4);
 
 -- Student Details
 INSERT INTO SDetails (userName, Name, STDID, degree, email, mobile) VALUES 

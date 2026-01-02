@@ -11,9 +11,7 @@ CREATE TABLE users (
 CREATE TABLE courses (
     ccode VARCHAR(10) PRIMARY KEY,
     cname VARCHAR(100),
-    credits INT,
-    day VARCHAR(20),
-    time VARCHAR(50)
+    credits INT
 );
 
 CREATE TABLE Departments (
