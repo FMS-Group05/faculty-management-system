@@ -28,18 +28,18 @@ public class CourseEntrolledPanel extends JPanel {
         String[] columnNames = {"Course code", "Course name", "Credits", "Grade"};
 
         Object[][] data = {
-                {"CSCI 21062", "OOP", "2", "A+"},
+                {"CSCI 21062", "OOP", "3", "A+"},
                 {"CSCI 21052", "SE", "2", "B"},
                 {"CSCI 21042", "ADBS", "2", "A"},
-                {"CSCI 21032", "STAT", "2", "D"},
+                {"CSCI 21032", "STAT", "3", "D"},
                 {"CSCI 21022", "ENGLISH", "2", "C"},
                 {"CSCI 21012", "MANAGEMNET", "2", "B"},
-                {"CSCI 21062", "OOP", "2", "A+"},
-                {"CSCI 21052", "SE", "2", "B"},
+                {"CSCI 21062", "NETWORKING", "2", "A"},
+                {"CSCI 21052", "PROJECT", "2", "-B"},
                 {"CSCI 21042", "ADBS", "2", "A"},
-                {"CSCI 21032", "STAT", "2", "D"},
+                {"CSCI 21032", "STAT", "3", "D+"},
                 {"CSCI 21022", "ENGLISH", "2", "C"},
-                {"CSCI 21012", "MANAGEMNET", "2", "B"}
+                {"CSCI 21012", "MANAGEMNET II", "2", "B"}
 
         };
 
