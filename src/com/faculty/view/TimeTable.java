@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableCellEditor;
+//import javax.swing.table.TableCellEditor;
 import javax.swing.table.JTableHeader;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
