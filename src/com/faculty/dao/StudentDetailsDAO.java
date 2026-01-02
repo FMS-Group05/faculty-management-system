@@ -3,11 +3,11 @@ package com.faculty.dao;
 import com.faculty.util.DBConnection;
 import java.sql.*;
 
-public class StudentDAO {
-    String sql = "UPDATE SDetails SET Name=?, STDID=?, degree=?, email=?, mobile=? WHERE userName=?";
+public class StudentDetailsDAO {
 
     public int updateProfile(String username, String fullName, String studentId, String degree, String email,
             String mobileNumber) throws SQLException {
+        String sql = "UPDATE SDetails SET Name=?, STDID=?, degree=?, email=?, mobile=? WHERE userName=?";
         try (Connection con = DBConnection.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, fullName);
@@ -38,4 +38,5 @@ public class StudentDAO {
             }
         }
     }
+
 }

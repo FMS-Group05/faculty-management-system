@@ -1,36 +1,34 @@
 package com.faculty.controller;
 
-import com.faculty.dao.StudentDAO;
-import com.faculty.model.Student;
+import com.faculty.dao.StudentDetailsDAO;
+import com.faculty.model.User;
 import com.faculty.view.*;
 
 import javax.swing.*;
 
-public class StudentController {
-    private final StudentDashboardView view;
-    private final StudentDAO dao = new StudentDAO();
+public class StudentDetailsController {
+    private final ProfileDetailsPanel view;
+    private final StudentDetailsDAO dao = new StudentDetailsDAO();
 
-    public StudentController(StudentDashboardView view) {
+    public StudentDetailsController(ProfileDetailsPanel view, User user) {
         this.view = view;
+
         try {
-            String[] values = dao.loadProfile(view.getUser().getUsername());
-            view.getProfilePanel().setFields(values);
+            String[] values = dao.loadProfile(user.getUsername());
+            view.setFields(values);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(view, "Error loading profile: " + e.getMessage());
         }
-        initActions();
-    }
 
-    private void initActions() {
-        view.getProfilePanel().getSaveButton().addActionListener(e -> {
-            JTextField[] fields = view.getProfilePanel().getFields();
+        view.getSaveButton().addActionListener(e -> {
+            JTextField[] fields = view.getFields();
             String[] values = new String[fields.length];
             for (int i = 0; i < fields.length; i++) {
                 values[i] = fields[i].getText();
             }
             try {
-                int rowsAffected = dao.updateProfile(view.getUser().getUsername(), values[0], values[1], values[2], values[3], values[4]);
+                int rowsAffected = dao.updateProfile(user.getUsername(), values[0], values[1], values[2], values[3], values[4]);
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(view, "Profile updated successfully");
                 } else {

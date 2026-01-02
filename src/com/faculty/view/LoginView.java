@@ -2,6 +2,9 @@ package com.faculty.view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import com.faculty.controller.LoginController;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -49,6 +52,7 @@ public class LoginView extends JFrame {
 
         add(createLeftPanel());
         add(createRightPanel());
+        new LoginController(this);
     }
 
     // =========================================

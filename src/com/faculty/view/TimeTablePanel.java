@@ -1,5 +1,7 @@
 package com.faculty.view;
 
+import com.faculty.model.User;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +16,7 @@ public class TimeTablePanel extends JPanel {
     private DefaultTableModel model;
     private JLabel lblTime;
 
-    public TimeTablePanel() {
+    public TimeTablePanel(User user) {
         setBackground(new Color(245, 245, 250)); // light background
         setLayout(new BorderLayout());
 
@@ -151,17 +153,5 @@ public class TimeTablePanel extends JPanel {
             lblTime.setText(sdf.format(new Date()));
         });
         timer.start();
-    }
-
-    // ---------- Main method for testing ----------
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Student Timetable");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(900, 500);
-            frame.setLocationRelativeTo(null);
-            frame.add(new TimeTablePanel());
-            frame.setVisible(true);
-        });
     }
 }

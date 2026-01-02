@@ -1,5 +1,9 @@
 package com.faculty.view;
 
+import com.faculty.controller.StudentDetailsController;
+import com.faculty.model.User;
+import com.faculty.util.ColorPalette;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -12,7 +16,7 @@ public class ProfileDetailsPanel extends JPanel {
     private final JTextField[] fields = new JTextField[labels.length];
     private final Color PURPLE = new Color(132, 84, 255);
 
-    public ProfileDetailsPanel() {
+    public ProfileDetailsPanel(User user) {
         setLayout(new GridBagLayout());
         setBackground(new Color(245, 245, 250));
 
@@ -104,6 +108,8 @@ public class ProfileDetailsPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(20, 10, 10, 10);
         add(cardPanel, gbc);
+
+        new StudentDetailsController(this, user);
     }
 
     // ---------- GETTERS ----------
@@ -114,17 +120,5 @@ public class ProfileDetailsPanel extends JPanel {
         for (int i = 0; i < fields.length; i++) {
             fields[i].setText(values[i]);
         }
-    }
-
-    // ---------- MAIN METHOD ----------
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Profile Details");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1200, 550);
-            frame.setLocationRelativeTo(null);
-            frame.add(new ProfileDetailsPanel());
-            frame.setVisible(true);
-        });
     }
 }
