@@ -73,6 +73,19 @@ public class LecturerDashboardView extends JFrame {
         logoutBtn.setFocusPainted(false);
         logoutBtn.setBorder(new LineBorder(Color.WHITE, 1, true));
 
+        // Logout action
+        logoutBtn.addActionListener(e -> {
+            // Show logout message
+            JOptionPane.showMessageDialog(this, "Logged out successfully");
+
+            // Open login/signup window
+            LoginView loginView = new LoginView();
+            loginView.setVisible(true);  // opens login window (can default to signup)
+
+            // Close current dashboard
+            dispose();
+        });
+
         JPanel logoutBox = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
         logoutBox.setOpaque(false);
         logoutBox.add(logoutBtn);
@@ -99,10 +112,7 @@ public class LecturerDashboardView extends JFrame {
         profileBtn.addActionListener(e -> switchPanel("Profile", profileBtn));
         messagesBtn.addActionListener(e -> switchPanel("Messages", messagesBtn));
 
-        logoutBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Logged out successfully");
-            dispose();
-        });
+
     }
 
     private void switchPanel(String name, JButton activeBtn) {
