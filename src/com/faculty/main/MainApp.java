@@ -1,7 +1,7 @@
 package com.faculty.main;
 //....
 import com.faculty.view.LoginView;
-import com.faculty.controller.LoginController;
+//import com.faculty.controller.LoginController;
 import javax.swing.SwingUtilities;
 
 public class MainApp {
@@ -13,4 +13,3 @@ public class MainApp {
     }
 }
 
-//this is the test push/pull request
