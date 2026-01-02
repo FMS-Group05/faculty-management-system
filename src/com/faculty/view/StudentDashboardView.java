@@ -10,8 +10,13 @@ import java.awt.event.ActionEvent;
 public class StudentDashboardView extends JFrame {
 
     private final JPanel contentPanel;
+    private final ProfileDetailsPanel profilePanel = new ProfileDetailsPanel();
+    private final TimeTablePanel timetablePanel = new TimeTablePanel();
+    private final CourseEntrolledPanel courseEnrolledPanel = new CourseEntrolledPanel();
+    private User user;
 
     public StudentDashboardView(User user) {
+        this.user = user;
         setTitle("Student Dashboard");
         setSize(900, 500);
         setLocationRelativeTo(null);
@@ -63,12 +68,12 @@ public class StudentDashboardView extends JFrame {
         contentPanel.setBackground(Color.WHITE);
 
         // Default view
-        showPanel(new ProfileDetailsPanel());
+        showPanel(profilePanel);
 
         // Button actions
-        btnProfile.addActionListener((ActionEvent e) -> showPanel(new ProfileDetailsPanel()));
-        btnTimetable.addActionListener((ActionEvent e) -> showPanel(new TimeTablePanel()));
-        btnCourses.addActionListener((ActionEvent e) -> showPanel(new CourseEntrolledPanel()));
+        btnProfile.addActionListener((ActionEvent e) -> showPanel(profilePanel));
+        btnTimetable.addActionListener((ActionEvent e) -> showPanel(timetablePanel));
+        btnCourses.addActionListener((ActionEvent e) -> showPanel(courseEnrolledPanel));
 
         add(sidebar, BorderLayout.WEST);
         add(contentPanel, BorderLayout.CENTER);
@@ -116,4 +121,9 @@ public class StudentDashboardView extends JFrame {
         contentPanel.revalidate();
         contentPanel.repaint();
     }
+
+    public ProfileDetailsPanel getProfilePanel() { return profilePanel; }
+    public TimeTablePanel getTimetablePanel() { return timetablePanel; }
+    public CourseEntrolledPanel getCourseEnrolledPanel() { return courseEnrolledPanel; }
+    public User getUser() { return user; }
 }

@@ -1,31 +1,38 @@
-INSERT INTO Users (userName, pws, Role) VALUES ('admin', 'admin', 'Admin');
+-- Create the Admin, a Lecturer, and a Student
+INSERT INTO users (username, pws, Role) VALUES 
+('admin', 'admin', 'Admin'),
+('lec1', 'lec123', 'Lecturer'),
+('std1', 'std123', 'Student');
 
--- Departments
-INSERT INTO Dept (deptN, name, HOD, degree, NoOfStaf) VALUES 
-('CS', 'Computer Science', 'Dr. Smith', 'BSc Computer Science', 15),
-('SE', 'Software Engineering', 'Dr. Doe', 'BSc Software Engineering', 12);
+-- Add Departments and Degrees
+INSERT INTO Departments (dptN, name, HOD, noOfStaf) VALUES 
+('CS', 'Computer Science', 'Dr. Aris', 15);
 
--- Degrees
-INSERT INTO Degrees (dgree, dept, NoOfStd) VALUES 
-('BSc Computer Science', 'CS', 120),
-('BSc Software Engineering', 'SE', 100);
+INSERT INTO Degrees (degree, NoOfStd) VALUES 
+('BSc Computer Science', 120);
 
--- Users (Lecturers)
-INSERT INTO Users (userName, pws, Role) VALUES 
-('lec1', '123', 'Lecturer'),
-('lec2', '123', 'Lecturer');
-
--- Lecturer Details
-INSERT INTO LDetails (userName, Name, deptN, email, mobile) VALUES 
-('lec1', 'Dr. Alan Turing', 'CS', 'alan@uok.ac.lk', '0711234567'),
-('lec2', 'Dr. Grace Hopper', 'SE', 'grace@uok.ac.lk', '0717654321');
-
--- Users (Students)
-INSERT INTO Users (userName, pws, Role) VALUES 
-('std1', '123', 'Student'),
-('std2', '123', 'Student');
+-- Add your current courses with Day and Time
+INSERT INTO courses (ccode, cname, credits, time, day) VALUES 
+('CSCI 21001', 'Object Oriented Programming', 3, '09:00 - 11:00', 'Monday'),
+('CSCI 21002', 'Software Engineering', 4, '13:00 - 15:00', 'Wednesday');
 
 -- Student Details
-INSERT INTO SDetails (STDID, userName, Name, degree, email, mobile) VALUES 
-('S24001', 'std1', 'Kamal Perera', 'BSc Computer Science', 'kamal@uok.ac.lk', '0771112233'),
-('S24002', 'std2', 'Nimal Silva', 'BSc Software Engineering', 'nimal@uok.ac.lk', '0774445566');
+INSERT INTO SDetails (userName, Name, STDID, degree, email, mobile) VALUES 
+('std1', 'John Doe', 'S10021', 'BSc Computer Science', 'jdoe@uni.edu', '0771122334');
+
+-- Lecturer Details (Linking to CS dept and a course)
+INSERT INTO LDetails (userName, Name, dpt, Ccode, email, mobile) VALUES 
+('lec1', 'Dr. Smith', 'CS', 'CSCI 21001', 'smith@uni.edu', '0775566778');
+
+-- Enrolling the student in the courses
+INSERT INTO EnrolledCourses (Uname, Ccode, grade) VALUES 
+('std1', 'CSCI 21001', 'A'),
+('std1', 'CSCI 21002', 'B+');
+
+-- Assigning the Lecturer to the Course
+INSERT INTO CourseLec (ccode, Luser) VALUES 
+('CSCI 21001', 'lec1');
+
+-- Linking Department to Degrees
+INSERT INTO deptDegrees (dptN, dgree) VALUES 
+('CS', 'BSc Computer Science');

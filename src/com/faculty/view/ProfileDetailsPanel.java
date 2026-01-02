@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ProfileDetailsPanel extends JPanel {
+    private final JButton saveButton  = new JButton("Save changes");
+    private final String[] labels = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
+    private final JTextField[] fields = new JTextField[labels.length];
 
     public ProfileDetailsPanel() {
         setLayout(new GridBagLayout());
@@ -31,8 +34,6 @@ public class ProfileDetailsPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10); // reset spacing
 
         // ---------- Labels + Fields ----------
-        String[] labels = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
-        JTextField[] fields = new JTextField[labels.length];
 
         Font fieldFont = new Font("Segoe UI", Font.PLAIN, 16);
         Color customBorderColor = new Color(132, 84, 255); // new border color
@@ -57,7 +58,7 @@ public class ProfileDetailsPanel extends JPanel {
         }
 
         // ---------- Save Button ----------
-        JButton saveButton = new JButton("Save changes");
+        // saveButton = new JButton("Save changes");
         saveButton.setBackground(ColorPalette.PRIMARY);
         saveButton.setForeground(Color.WHITE);
         saveButton.setFocusPainted(false);
@@ -70,5 +71,14 @@ public class ProfileDetailsPanel extends JPanel {
         gbc.anchor = GridBagConstraints.EAST;
         gbc.insets = new Insets(20, 10, 20, 30);
         add(saveButton, gbc);
+    }
+
+    public JButton getSaveButton() { return saveButton; }
+    public JTextField[] getFields() { return fields; }
+
+    public void setFields(String[] values) {
+        for (int i = 0; i < fields.length; i++) {
+            fields[i].setText(values[i]);
+        }
     }
 }

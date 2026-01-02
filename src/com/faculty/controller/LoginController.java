@@ -64,7 +64,11 @@ public class LoginController {
                 case "Lecturer" -> new LecturerDashboardView(user).setVisible(true);
 
                 // ✅ Added Student Dashboard Launch (using your new GUI)
-                case "Student" -> new StudentDashboardView(user).setVisible(true);
+                case "Student" -> {
+                    StudentDashboardView s = new StudentDashboardView(user);
+                    s.setVisible(true);
+                    new StudentController(s);
+                }
 
                 default -> JOptionPane.showMessageDialog(null, "Unknown role: " + role);
             }
