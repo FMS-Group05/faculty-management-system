@@ -123,6 +123,11 @@ public class AdminDashboardView extends JFrame {
         departmentsBtn.addActionListener(e -> switchPanel("Departments", departmentsBtn));
         degreesBtn.addActionListener(e -> switchPanel("Degrees", degreesBtn));
         timeTableBtn.addActionListener(e -> switchPanel("TimeTable", timeTableBtn)); // ✅ Navigation එක එක් කිරීම
+        
+        logoutBtn.addActionListener(e -> {
+            dispose();
+            new LoginView().setVisible(true);
+        });
     }
 
     private void switchPanel(String name, JButton activeBtn) {

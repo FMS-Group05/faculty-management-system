@@ -83,7 +83,7 @@ public class LoginView extends JFrame {
         panel.add(icon, gbc);
 
         gbc.gridy++;
-        JLabel title = new JLabel("Welcome to Faculty Management System");
+        JLabel title = new JLabel("<html><center>Welcome to<br>Faculty Management System</center></html>");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
         title.setForeground(Color.WHITE);
         panel.add(title, gbc);
