@@ -154,16 +154,4 @@ public class TimeTablePanel extends JPanel {
         });
         timer.start();
     }
-
-    // // ---------- Main method for testing ----------
-    // public static void main(String[] args) {
-    //     SwingUtilities.invokeLater(() -> {
-    //         JFrame frame = new JFrame("Student Timetable");
-    //         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //         frame.setSize(900, 500);
-    //         frame.setLocationRelativeTo(null);
-    //         frame.add(new TimeTablePanel());
-    //         frame.setVisible(true);
-    //     });
-    // }
 }
