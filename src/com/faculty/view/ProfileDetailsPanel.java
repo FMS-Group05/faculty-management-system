@@ -9,6 +9,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ProfileDetailsPanel extends JPanel {
+    private final JButton saveButton  = new JButton("Save changes");
+    private final String[] labels = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
+    private final JTextField[] fields = new JTextField[labels.length];
 
     public ProfileDetailsPanel() {
         setLayout(new GridBagLayout());
@@ -50,8 +53,6 @@ public class ProfileDetailsPanel extends JPanel {
         cardGbc.gridwidth = 1;
 
         // ---------- Labels + Fields ----------
-        String[] labels = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
-        JTextField[] fields = new JTextField[labels.length];
 
         Font fieldFont = new Font("Segoe UI", Font.PLAIN, 16);
 
@@ -80,7 +81,6 @@ public class ProfileDetailsPanel extends JPanel {
         }
 
         // ---------- Save Button ----------
-        JButton saveButton = new JButton("Save changes");
         saveButton.setBackground(borderColor);
         saveButton.setForeground(Color.WHITE);
         saveButton.setFocusPainted(false);
@@ -124,5 +124,14 @@ public class ProfileDetailsPanel extends JPanel {
             frame.add(new ProfileDetailsPanel());
             frame.setVisible(true);
         });
+    }
+
+    public JButton getSaveButton() { return saveButton; }
+    public JTextField[] getFields() { return fields; }
+
+    public void setFields(String[] values) {
+        for (int i = 0; i < fields.length; i++) {
+            fields[i].setText(values[i]);
+        }
     }
 }
