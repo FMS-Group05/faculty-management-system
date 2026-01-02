@@ -38,9 +38,10 @@ public class StudentDashboardView extends JFrame {
         sidebar.add(welcomeLabel);
 
         // Buttons
-        JButton btnProfile = createSidebarButton("Profile Details");
-        JButton btnTimetable = createSidebarButton("Time Table");
-        JButton btnCourses = createSidebarButton("Course Enrolled");
+        JButton btnProfile = createSidebarButton("Profile Details ");
+        JButton btnTimetable = createSidebarButton("Time Table ");
+        JButton btnCourses = createSidebarButton("Course Enrolled ");
+
 
         // Add buttons + spacing
         sidebar.add(btnProfile);
@@ -60,12 +61,29 @@ public class StudentDashboardView extends JFrame {
         btnLogout.setForeground(ColorPalette.PRIMARY);
         btnLogout.setMaximumSize(new Dimension(150, 35));
         btnLogout.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+// Add ActionListener for logout
+        btnLogout.addActionListener(e -> {
+            // Assuming LoginView is a JFrame
+            LoginView loginView = new LoginView(); // create login view
+            loginView.setVisible(true);           // show login view
+
+            // Close current window
+            SwingUtilities.getWindowAncestor(btnLogout).dispose();
+        });
+
         sidebar.add(btnLogout);
         sidebar.add(Box.createRigidArea(new Dimension(0, 20)));
+
 
         // ---------- RIGHT CONTENT PANEL ----------
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.WHITE);
+
+// Shift panel to left by adding a border with right padding
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+// Insets: top, left, bottom, right
+
 
         // Default view
         showPanel(profilePanel);

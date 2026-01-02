@@ -36,34 +36,39 @@ public class ProfileDetailsPanel extends JPanel {
         // ---------- Labels + Fields ----------
 
         Font fieldFont = new Font("Segoe UI", Font.PLAIN, 16);
-        Color customBorderColor = new Color(132, 84, 255); // new border color
+        Color customColor = new Color(132, 84, 255); // border + label color
 
         for (int i = 0; i < labels.length; i++) {
             gbc.gridy++;
             gbc.gridx = 0;
+
+            // Label
             JLabel label = new JLabel(labels[i]);
-            label.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-            label.setForeground(Color.DARK_GRAY); // label color
+            label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            label.setForeground(customColor);
             add(label, gbc);
 
+            // TextField
             gbc.gridx = 1;
-            fields[i] = new JTextField(20);
+            fields[i] = new JTextField();
             fields[i].setFont(fieldFont);
-            fields[i].setForeground(ColorPalette.PRIMARY); // text color
+            fields[i].setForeground(customColor);
+
+            // Wider rectangular field
+            fields[i].setPreferredSize(new Dimension(900, 40)); // much wider and taller
             fields[i].setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(customBorderColor, 1, true), // new border color
-                    BorderFactory.createEmptyBorder(8, 10, 8, 10)
+                    BorderFactory.createLineBorder(customColor, 2, true),
+                    BorderFactory.createEmptyBorder(8, 12, 8, 12)
             ));
             add(fields[i], gbc);
         }
 
         // ---------- Save Button ----------
-        // saveButton = new JButton("Save changes");
-        saveButton.setBackground(ColorPalette.PRIMARY);
+        saveButton.setBackground(customColor);
         saveButton.setForeground(Color.WHITE);
         saveButton.setFocusPainted(false);
         saveButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        saveButton.setPreferredSize(new Dimension(160, 40));
+        saveButton.setPreferredSize(new Dimension(180, 45));
         saveButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         gbc.gridy++;
