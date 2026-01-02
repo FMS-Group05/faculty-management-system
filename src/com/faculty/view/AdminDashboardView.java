@@ -116,6 +116,11 @@ public class AdminDashboardView extends JFrame {
         coursesBtn.addActionListener(e -> switchPanel("Courses", coursesBtn));
         departmentsBtn.addActionListener(e -> switchPanel("Departments", departmentsBtn));
         degreesBtn.addActionListener(e -> switchPanel("Degrees", degreesBtn));
+        
+        logoutBtn.addActionListener(e -> {
+            dispose();
+            new LoginView().setVisible(true);
+        });
     }
 
     private void switchPanel(String name, JButton activeBtn) {
