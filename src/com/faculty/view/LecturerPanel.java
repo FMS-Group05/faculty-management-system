@@ -45,7 +45,7 @@ public class LecturerPanel extends JPanel {
         String[] columns = {"Full Name", "Department", "Courses teaching", "Email", "Mobile Number"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        // Scroll access පරීක්ෂා කිරීමට දත්ත පේළි කිහිපයක් එක් කරමු
+
         for(int i = 0; i < 15; i++) {
             model.addRow(new Object[]{"Kumar Sangakkara", "Software Engineering", "ETEC 21062", "kumars@kln.ac.lk", "0123456789"});
         }
@@ -53,10 +53,10 @@ public class LecturerPanel extends JPanel {
         table = new JTable(model);
         table.setRowHeight(40);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        table.setGridColor(PURPLE); // දම් පැහැති Grid lines
-        table.setShowGrid(true);    // තීරු සහ පේළි රාමු පෙන්වීමට
+        table.setGridColor(PURPLE);
+        table.setShowGrid(true);
 
-        // දත්ත මැදට පෙළගැස්වීම
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < table.getColumnCount(); i++) {
@@ -74,7 +74,7 @@ public class LecturerPanel extends JPanel {
         scroll.setBorder(new LineBorder(PURPLE, 2));
         scroll.getViewport().setBackground(Color.WHITE);
 
-        // දකුණු පස Scroll bar එක පෙන්වීමට සහ සුමටව ක්‍රියා කරවීමට
+
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         scroll.getVerticalScrollBar().setUnitIncrement(16);

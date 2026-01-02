@@ -12,10 +12,8 @@ public class AdminDashboardView extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
 
-    // Sidebar බොත්තම්
     private JButton studentsBtn, lecturersBtn, coursesBtn, departmentsBtn, degreesBtn, logoutBtn;
 
-    // පැනල් පන්ති (Panels)
     private StudentPanel studentPanel;
     private LecturerPanel lecturerPanel;
     private CoursePanel coursePanel;
@@ -30,14 +28,14 @@ public class AdminDashboardView extends JFrame {
         getContentPane().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
 
-        // Sidebar එක් කිරීම
+
         add(sidebar(), BorderLayout.WEST);
 
-        // CardLayout සමඟ ප්‍රධාන පැනලය සැකසීම
+
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // පැනල් නිර්මාණය කර CardLayout එකට එක් කිරීම
+
         studentPanel = new StudentPanel();
         lecturerPanel = new LecturerPanel();
         coursePanel = new CoursePanel();
@@ -52,7 +50,7 @@ public class AdminDashboardView extends JFrame {
 
         add(cardPanel, BorderLayout.CENTER);
 
-        // Navigation ක්‍රියාත්මක කිරීම
+
         initNavigation();
     }
 
@@ -68,7 +66,7 @@ public class AdminDashboardView extends JFrame {
         welcome.setBorder(new EmptyBorder(25, 0, 15, 0));
         panel.add(welcome);
 
-        // Sidebar බොත්තම් (Unicode Emojis සමඟ)
+
         studentsBtn = menuButton("Students", "\uD83D\uDC64", true);   // 👤
         lecturersBtn = menuButton("Lecturers", "\uD83D\uDC65", false); // 👥
         coursesBtn = menuButton("Courses", "\uD83D\uDCD6", false);     // 📖
@@ -81,7 +79,7 @@ public class AdminDashboardView extends JFrame {
         panel.add(departmentsBtn);
         panel.add(degreesBtn);
 
-        // Logout බොත්තම
+
         logoutBtn = new JButton("Log out");
         logoutBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         logoutBtn.setPreferredSize(new Dimension(160, 45));
@@ -112,7 +110,7 @@ public class AdminDashboardView extends JFrame {
     }
 
     private void initNavigation() {
-        // එක් එක් බොත්තම එබූ විට අදාළ පැනලය පෙන්වීමට CardLayout භාවිතා කරයි
+
         studentsBtn.addActionListener(e -> switchPanel("Students", studentsBtn));
         lecturersBtn.addActionListener(e -> switchPanel("Lecturers", lecturersBtn));
         coursesBtn.addActionListener(e -> switchPanel("Courses", coursesBtn));
