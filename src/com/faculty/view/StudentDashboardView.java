@@ -54,9 +54,10 @@ public class StudentDashboardView extends JFrame {
         sidebar.add(btnCourses);
 
         // Logout button
-        btnLogout = new JButton("Logout");
+        btnLogout = new JButton("Log Out");
         btnLogout.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnLogout.setPreferredSize(new Dimension(160, 45));
+        btnLogout.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnLogout.setBackground(Color.WHITE);
         btnLogout.setForeground(PURPLE);
         btnLogout.setFocusPainted(false);
@@ -80,6 +81,23 @@ public class StudentDashboardView extends JFrame {
             dispose();
         });
 
+        // Hover effect for logout button
+        btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLogout.setBackground(Color.WHITE);
+                btnLogout.setForeground(Color.RED);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLogout.setBackground(Color.WHITE);
+                btnLogout.setForeground(ColorPalette.PRIMARY);
+            }
+        });
+
+        sidebar.add(btnLogout);
+        sidebar.add(Box.createRigidArea(new Dimension(0, 20)));
 
         add(sidebar, BorderLayout.WEST);
 

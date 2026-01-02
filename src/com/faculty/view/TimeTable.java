@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableCellEditor;
+//import javax.swing.table.TableCellEditor;
 import javax.swing.table.JTableHeader;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -69,8 +69,8 @@ public class TimeTable extends JPanel {
         // ✅ ScrollPane with Persistent Vertical Scrollbar
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(new LineBorder(PURPLE, 2));
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // සැමවිටම scroll bar එක පෙන්වීමට
-        scroll.getVerticalScrollBar().setUnitIncrement(16); // Scroll කිරීම සුමට කිරීමට
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // show always scroll bar
+        scroll.getVerticalScrollBar().setUnitIncrement(16); 
 
         content.add(scroll, BorderLayout.CENTER);
         add(content, BorderLayout.CENTER);
@@ -124,7 +124,7 @@ public class TimeTable extends JPanel {
             button = new JButton("Upload files");
             button.addActionListener(e -> {
                 fireEditingStopped();
-                openFileChooser(); // පරිගණකයේ ෆයිල් මැෂින් එක විවෘත වේ
+                openFileChooser(); 
             });
         }
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
