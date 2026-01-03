@@ -20,6 +20,9 @@ public class StudentDashboardView extends JFrame {
     private JButton btnProfile, btnTimetable, btnCourses, btnLogout;
     private final Color PURPLE = new Color(132, 84, 255);
 
+    // Track which button is currently highlighted
+    private JButton selectedButton;
+
     // Controllers
     @SuppressWarnings("unused")
     private com.faculty.controller.StudentTimeTableController timeTableController;
@@ -55,11 +58,12 @@ public class StudentDashboardView extends JFrame {
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
         sidebar.add(welcome);
 
-        // Buttons with emojis (equal spacing)
+        // Buttons with emojis (initially only Profile highlighted)
         btnProfile = menuButton("Profile Details", "👤", true);
         btnTimetable = menuButton("Time Table", "🗓️", false);
         btnCourses = menuButton("Course Enrolled", "📚", false);
 
+        // Align buttons
         btnProfile.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnTimetable.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnCourses.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -69,6 +73,9 @@ public class StudentDashboardView extends JFrame {
         sidebar.add(btnTimetable);
         sidebar.add(Box.createVerticalStrut(15));
         sidebar.add(btnCourses);
+
+        // Set default selected button
+        selectedButton = btnProfile;
 
         // Add vertical glue to push logout to bottom
         sidebar.add(Box.createVerticalGlue());
@@ -121,10 +128,21 @@ public class StudentDashboardView extends JFrame {
         // Default view
         showPanel(profilePanel);
 
-        // Button navigation
-        btnProfile.addActionListener((ActionEvent e) -> showPanel(profilePanel));
-        btnTimetable.addActionListener((ActionEvent e) -> showPanel(timetablePanel));
-        btnCourses.addActionListener((ActionEvent e) -> showPanel(courseEnrolledPanel));
+        // ===== BUTTON NAVIGATION WITH HIGHLIGHT =====
+        btnProfile.addActionListener((ActionEvent e) -> {
+            showPanel(profilePanel);
+            highlightButton(btnProfile);
+        });
+
+        btnTimetable.addActionListener((ActionEvent e) -> {
+            showPanel(timetablePanel);
+            highlightButton(btnTimetable);
+        });
+
+        btnCourses.addActionListener((ActionEvent e) -> {
+            showPanel(courseEnrolledPanel);
+            highlightButton(btnCourses);
+        });
 
         setVisible(true);
     }
@@ -145,16 +163,32 @@ public class StudentDashboardView extends JFrame {
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn.setBackground(new Color(240, 235, 255)); // light purple hover
+                if (btn != selectedButton) {
+                    btn.setBackground(new Color(240, 235, 255));
+                }
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn.setBackground(Color.WHITE);
+                if (btn != selectedButton) {
+                    btn.setBackground(Color.WHITE);
+                }
             }
         });
 
         return btn;
+    }
+
+    // Highlight only the clicked button
+    private void highlightButton(JButton button) {
+        if (selectedButton != null) {
+            selectedButton.setForeground(new Color(160, 160, 160)); // reset previous
+            selectedButton.setBackground(Color.WHITE);
+        }
+
+        button.setForeground(PURPLE);
+        button.setBackground(new Color(240, 235, 255));
+        selectedButton = button;
     }
 
     // Switch content panels
