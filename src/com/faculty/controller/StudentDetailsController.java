@@ -18,13 +18,14 @@ public class StudentDetailsController {
         initActions(user);
     }
 
-    private void loadProfile(User user) {
+    public void loadProfile(User user) {
         try {
             String[] values = dao.loadProfile(user.getUsername());
 
             // Null-safe
             for (int i = 0; i < values.length; i++) {
-                if (values[i] == null) values[i] = "";
+                if (values[i] == null)
+                    values[i] = "";
             }
 
             view.setFields(values);

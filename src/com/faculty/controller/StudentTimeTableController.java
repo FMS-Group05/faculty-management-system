@@ -52,7 +52,7 @@ public class StudentTimeTableController {
         });
     }
 
-    private void updateImage() {
+    public void updateImage() {
         if (studentDegree == null)
             return;
 
@@ -79,5 +79,10 @@ public class StudentTimeTableController {
                 view.setStatus("No timetable uploaded for " + studentDegree + " - Year " + year);
             }
         }
+    }
+
+    public void refreshPanel() {
+        loadStudentDegree();
+        updateImage();
     }
 }

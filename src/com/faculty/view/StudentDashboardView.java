@@ -25,7 +25,7 @@ public class StudentDashboardView extends JFrame {
 
     // Controllers
     @SuppressWarnings("unused")
-    private com.faculty.controller.StudentTimeTableController timeTableController;
+    private com.faculty.controller.StudentDashboardController dashboardController;
 
     public StudentDashboardView(User user) {
         this.user = user;
@@ -35,7 +35,8 @@ public class StudentDashboardView extends JFrame {
         courseEnrolledPanel = new CourseEntrolledPanel(user);
 
         // Initialize Timetable logic
-        timeTableController = new com.faculty.controller.StudentTimeTableController(timetablePanel, user);
+        // timeTableController = new
+        // com.faculty.controller.StudentTimeTableController(timetablePanel, user);
 
         setTitle("Student Dashboard");
         setSize(1000, 600);
@@ -145,6 +146,9 @@ public class StudentDashboardView extends JFrame {
         });
 
         setVisible(true);
+
+        // Initialize Controller
+        this.dashboardController = new com.faculty.controller.StudentDashboardController(this, user);
     }
 
     // Sidebar button with emoji
@@ -210,6 +214,18 @@ public class StudentDashboardView extends JFrame {
 
     public CourseEntrolledPanel getCourseEnrolledPanel() {
         return courseEnrolledPanel;
+    }
+
+    public JButton getBtnProfile() {
+        return btnProfile;
+    }
+
+    public JButton getBtnTimetable() {
+        return btnTimetable;
+    }
+
+    public JButton getBtnCourses() {
+        return btnCourses;
     }
 
     public User getUser() {

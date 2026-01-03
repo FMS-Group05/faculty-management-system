@@ -1,7 +1,6 @@
 package com.faculty.view;
 
 import com.faculty.model.User;
-import com.faculty.controller.StudentCourseController;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -25,8 +24,10 @@ public class CourseEntrolledPanel extends JPanel {
             { "CSCI 21032", "STAT", "3", "D+" },
             { "CSCI 21022", "ENGLISH", "2", "C" },
             { "CSCI 21012", "MANAGEMNET II", "2", "B" }
-
     };
+
+    private JButton enrollBtn, unenrollBtn, gradeBtn;
+    private JTable table;
 
     public CourseEntrolledPanel(User user) {
         // 1. Basic Panel Setup
@@ -43,6 +44,21 @@ public class CourseEntrolledPanel extends JPanel {
         titleLabel.setForeground(themeColor);
         add(titleLabel, BorderLayout.NORTH);
 
+        JPanel content = new JPanel(new BorderLayout());
+        content.setBackground(Color.WHITE);
+
+        // Top Actions Panel
+        JPanel topActions = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 10));
+        topActions.setBackground(Color.WHITE);
+        enrollBtn = actionButton("Enroll", themeColor);
+        unenrollBtn = actionButton("Unenroll", new Color(180, 180, 180));
+        gradeBtn = actionButton("Change Grade", new Color(180, 180, 180));
+
+        topActions.add(enrollBtn);
+        topActions.add(unenrollBtn);
+        topActions.add(gradeBtn);
+        content.add(topActions, BorderLayout.NORTH);
+
         // 3. Data for the Table (Mock Data based on your image)
         String[] columnNames = { "Course code", "Course name", "Credits", "Grade" };
 
@@ -55,7 +71,7 @@ public class CourseEntrolledPanel extends JPanel {
             }
         };
 
-        JTable table = new JTable(model);
+        table = new JTable(model);
 
         // 5. Styling the Table to match the design
         table.setFillsViewportHeight(true);
@@ -87,9 +103,41 @@ public class CourseEntrolledPanel extends JPanel {
         scrollPane.getViewport().setBackground(Color.WHITE); // White background for empty space
         scrollPane.setBorder(BorderFactory.createLineBorder(themeColor, 1)); // Border around the whole table list
 
-        add(scrollPane, BorderLayout.CENTER);
+        content.add(scrollPane, BorderLayout.CENTER);
+        add(content, BorderLayout.CENTER);
 
-        new StudentCourseController(this, user);
+        content.add(scrollPane, BorderLayout.CENTER);
+        add(content, BorderLayout.CENTER);
+    }
+
+    private JButton actionButton(String text, Color bg) {
+        JButton btn = new JButton(text);
+        btn.setPreferredSize(new Dimension(160, 40));
+        btn.setBackground(bg);
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btn.setBorder(BorderFactory.createLineBorder(bg, 1, true));
+        return btn;
+    }
+
+    public JButton getEnrollButton() {
+        return enrollBtn;
+    }
+
+    public JButton getUnenrollButton() {
+        return unenrollBtn;
+    }
+
+    public JButton getGradeButton() {
+        return gradeBtn;
+    }
+
+    public String getSelectedCourseCode() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            return table.getValueAt(selectedRow, 0).toString();
+        }
+        return null;
     }
 
     public void setData(Object[][] newData) {

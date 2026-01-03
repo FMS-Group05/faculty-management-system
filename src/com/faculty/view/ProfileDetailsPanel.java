@@ -1,6 +1,5 @@
 package com.faculty.view;
 
-import com.faculty.controller.StudentDetailsController;
 import com.faculty.dao.StudentDetailsDAO;
 import com.faculty.model.User;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class ProfileDetailsPanel extends JPanel {
 
     private final JButton saveButton = new JButton("Save changes");
-    private final String[] labels = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
+    private final String[] labels = { "Full Name", "Student ID", "Degree", "Email", "Mobile Number" };
     private final JComponent[] fields = new JComponent[labels.length];
     private final Color PURPLE = new Color(132, 84, 255);
 
@@ -41,8 +40,7 @@ public class ProfileDetailsPanel extends JPanel {
         cardPanel.setBackground(Color.WHITE);
         cardPanel.setBorder(new CompoundBorder(
                 new LineBorder(PURPLE, 3, true),
-                new EmptyBorder(25, 30, 25, 30)
-        ));
+                new EmptyBorder(25, 30, 25, 30)));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -57,7 +55,8 @@ public class ProfileDetailsPanel extends JPanel {
                 JComboBox<String> comboBox = new JComboBox<>();
                 try {
                     List<String> degrees = dao.getAllDegreeNames();
-                    for (String d : degrees) comboBox.addItem(d);
+                    for (String d : degrees)
+                        comboBox.addItem(d);
                 } catch (Exception e) {
                     comboBox.addItem("Error loading degrees");
                 }
@@ -111,8 +110,7 @@ public class ProfileDetailsPanel extends JPanel {
         mainGbc.gridy = 1;
         add(cardPanel, mainGbc);
 
-        // Load profile data after login
-        new StudentDetailsController(this, user);
+        add(cardPanel, mainGbc);
     }
 
     private void addField(JPanel panel, GridBagConstraints gbc, int row, String labelText, JComponent field) {
@@ -197,9 +195,5 @@ public class ProfileDetailsPanel extends JPanel {
 
     public JButton getSaveButton() {
         return saveButton;
-    }
-
-    public JComponent[] getFields() {
-        return fields;
     }
 }
