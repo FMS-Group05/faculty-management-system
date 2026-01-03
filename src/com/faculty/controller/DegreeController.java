@@ -71,21 +71,11 @@ public class DegreeController {
             JTable table = view.getDegreePanel().getDegreeTable();
             int viewRow = table.getSelectedRow();
 
-            // Columns: Degree=0, Dept Name=1, Count=2
-            // Note: Dept displayed is Name, but we need Code for update if we change it.
-            // Our DAO getAllDepartments returns Codes (dptN).
-            // This is a disconnect. DAO loads Codes for combo, but Table shows Names.
-            // For now, we'll try to pre-select if possible, or user has to re-select.
-            // Or we assume the user knows the code.
-            // In a pro app we'd map Name->Code. Here we'll just populate combo with Codes.
-
             Object countObj = table.getValueAt(viewRow, 2);
             String currentCount = countObj != null ? countObj.toString() : "";
 
             List<String> depts = dao.getAllDepartments();
             JComboBox<String> deptCombo = new JComboBox<>(depts.toArray(new String[0]));
-            // Can't easily match Name to Code without extra map. We'll leave it at first
-            // item.
 
             JTextField stdCountField = new JTextField(currentCount);
 

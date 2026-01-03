@@ -25,8 +25,6 @@ public class StudentTimeTableController {
 
         loadStudentDegree();
         initActions();
-
-        // Load initial data (Year 1 by default)
         updateImage();
     }
 

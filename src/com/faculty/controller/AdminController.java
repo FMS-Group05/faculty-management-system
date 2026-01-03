@@ -1,11 +1,8 @@
 package com.faculty.controller;
 
-import com.faculty.dao.AdminPanelsDAO;
 import com.faculty.view.AdminDashboardView;
-import com.faculty.view.LoginView;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 public class AdminController {
     private final AdminDashboardView view;
@@ -29,7 +26,6 @@ public class AdminController {
         this.timeTableController = new TimeTableController(view);
 
         initActions();
-        // initTimeTableActions(); // Handled by TimeTableController now
     }
 
     private void initActions() {
@@ -43,7 +39,6 @@ public class AdminController {
 
         view.getLogoutButton().addActionListener(e -> {
 
-                // This waits until OK is clicked
                 JOptionPane.showMessageDialog(
                         null,
                         "Logged out successfully",
@@ -54,6 +49,4 @@ public class AdminController {
         );
 
     }
-
-    // initTimeTableActions removed - moved to TimeTableController
 }

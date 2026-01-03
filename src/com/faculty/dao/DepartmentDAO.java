@@ -13,10 +13,6 @@ import com.faculty.util.DBConnection;
 public class DepartmentDAO {
 
     public Object[][] loadDepartments() throws SQLException {
-        // SELECT d.name, d.HOD, dd.dgree, d.noOfStaf, d.dptN (hidden)
-        // Note: Joining with deptDegrees might cause duplicates if multiple degrees.
-        // For this panel, we'll accept that or use GROUP_CONCAT if supported, but
-        // simple join is consistent with previous logic.
         String sql = "SELECT d.name, d.HOD, dd.dgree, d.noOfStaf, d.dptN " +
                 "FROM Departments d " +
                 "LEFT JOIN deptDegrees dd ON d.dptN = dd.dptN";
@@ -67,14 +63,7 @@ public class DepartmentDAO {
                 ps.setString(1, dptN);
                 ps.executeUpdate();
             }
-
-            // LDetails (Lecturers) - Set dpt to NULL? Or fail if lecturers exist?
-            // Let's set to NULL for safety or delete them? Usually departments shouldn't be
-            // deleted if referenced.
-            // But for this simple CRUD, we'll try to set NULL or assume user cleared them.
-            // Let's try to set FKs to null if possible, or DELETE if cascading is implied.
-            // Schema has `FOREIGN KEY (dpt) REFERENCES Departments(dptN)`.
-            // We'll try to update LDetails first.
+            
             String sqlLec = "UPDATE LDetails SET dpt=NULL WHERE dpt=?";
             try (PreparedStatement ps = con.prepareStatement(sqlLec)) {
                 ps.setString(1, dptN);

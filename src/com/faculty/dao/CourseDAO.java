@@ -13,8 +13,6 @@ import com.faculty.util.DBConnection;
 public class CourseDAO {
 
     public Object[][] loadCourses() throws SQLException {
-        // Left join to get lecturer name if assigned, otherwise null
-        // Columns: Code, Name, Credits, Lecturer Name
         String sql = "SELECT c.ccode, c.cname, c.credits, l.Name " +
                 "FROM courses c " +
                 "LEFT JOIN LDetails l ON c.ccode = l.Ccode";
@@ -36,7 +34,6 @@ public class CourseDAO {
     }
 
     public boolean updateCourse(String ccode, String cname, int credits) {
-        // Note: We are not allowing updating ccode as it is PK and used elsewhere.
         String sql = "UPDATE courses SET cname=?, credits=? WHERE ccode=?";
         try (Connection con = DBConnection.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -56,7 +53,6 @@ public class CourseDAO {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            // Set Ccode to null in LDetails (if any lecturer teaches this)
             String sqlLec = "UPDATE LDetails SET Ccode=NULL WHERE Ccode=?";
             try (PreparedStatement ps = con.prepareStatement(sqlLec)) {
                 ps.setString(1, ccode);

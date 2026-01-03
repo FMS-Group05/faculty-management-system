@@ -3,7 +3,6 @@ package com.faculty.controller;
 import com.faculty.dao.StudentDAO;
 import com.faculty.view.AdminDashboardView;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 public class StudentController {

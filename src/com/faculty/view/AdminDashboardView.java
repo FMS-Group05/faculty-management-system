@@ -40,14 +40,14 @@ public class AdminDashboardView extends JFrame {
         coursePanel = new CoursePanel();
         departmentPanel = new DepartmentPanel();
         degreePanel = new DegreePanel();
-        timeTablePanel = new TimeTable(); // ✅ නව TimeTable පැනලය initialize කිරීම
+        timeTablePanel = new TimeTable(); 
 
         cardPanel.add(studentPanel, "Students");
         cardPanel.add(lecturerPanel, "Lecturers");
         cardPanel.add(coursePanel, "Courses");
         cardPanel.add(departmentPanel, "Departments");
         cardPanel.add(degreePanel, "Degrees");
-        cardPanel.add(timeTablePanel, "TimeTable"); // ✅ CardLayout එකට එක් කිරීම
+        cardPanel.add(timeTablePanel, "TimeTable"); 
 
         add(cardPanel, BorderLayout.CENTER);
 
@@ -72,7 +72,7 @@ public class AdminDashboardView extends JFrame {
         coursesBtn = menuButton("Courses", "\uD83D\uDCD6", false);
         departmentsBtn = menuButton("Departments", "\uD83C\uDFDB", false);
         degreesBtn = menuButton("Degrees", "\uD83C\uDF93", false);
-        timeTableBtn = menuButton("Time Table", "\uD83D\uDCC5", false); // ✅ 📅 Icon එක සමඟ නව බොත්තම
+        timeTableBtn = menuButton("Time Table", "\uD83D\uDCC5", false); 
 
         panel.add(studentsBtn);
         panel.add(lecturersBtn);
@@ -116,7 +116,7 @@ public class AdminDashboardView extends JFrame {
         coursesBtn.addActionListener(e -> switchPanel("Courses", coursesBtn));
         departmentsBtn.addActionListener(e -> switchPanel("Departments", departmentsBtn));
         degreesBtn.addActionListener(e -> switchPanel("Degrees", degreesBtn));
-        timeTableBtn.addActionListener(e -> switchPanel("TimeTable", timeTableBtn)); // ✅ Navigation එක එක් කිරීම
+        timeTableBtn.addActionListener(e -> switchPanel("TimeTable", timeTableBtn)); 
 
         logoutBtn.addActionListener(e -> {
             dispose();
@@ -159,7 +159,7 @@ public class AdminDashboardView extends JFrame {
 
     public TimeTable getTimeTablePanel() {
         return timeTablePanel;
-    } // ✅ නව Getter
+    } 
 
     public JButton getLogoutButton() {
         return logoutBtn;

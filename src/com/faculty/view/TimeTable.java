@@ -5,14 +5,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-//import javax.swing.table.TableCellEditor;
 import javax.swing.table.JTableHeader;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 public class TimeTable extends JPanel {
     private JTable table;
@@ -97,8 +93,6 @@ public class TimeTable extends JPanel {
 
             int row = table.getSelectedRow();
             if (row != -1) {
-                // Store absolute path temporarily in visual model; Controller will handle copy
-                // on Save
                 table.setValueAt(file.getAbsolutePath(), row, 2);
             }
         }

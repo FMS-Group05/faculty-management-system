@@ -13,8 +13,6 @@ import com.faculty.util.DBConnection;
 public class DegreeDAO {
 
     public Object[][] loadDegrees() throws SQLException {
-        // Degree, Department, No of Students
-        // Degree table has NoOfStd. Department comes from deptDegrees.
         String sql = "SELECT d.degree, dep.name, d.NoOfStd " +
                 "FROM Degrees d " +
                 "LEFT JOIN deptDegrees dd ON d.degree = dd.dgree " +
@@ -24,14 +22,7 @@ public class DegreeDAO {
 
     public List<String> getAllDepartments() throws SQLException {
         List<String> depts = new ArrayList<>();
-        String sql = "SELECT dptN FROM Departments"; // Or name? deptDegrees uses dptN. UI usually shows Name?
-        // But for insertion into deptDegrees we need dptN.
-        // Let's return dptN for simplicity or implement a map if needed.
-        // Given previous dropdowns used Names (but codes are stored)?
-        // StudentDAO `getAllDegrees` returned degree names (which are PKs).
-        // DeptDAO uses dptN as PK but name as display.
-        // For simplicity let's use dptN (Code) in dropdown or Name if we look it up.
-        // Let's use dptN for now as it's the FK.
+        String sql = "SELECT dptN FROM Departments"; 
         try (Connection con = DBConnection.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
@@ -91,7 +82,6 @@ public class DegreeDAO {
     }
 
     public boolean updateDegree(String degreeName, String deptCode, int noOfStd) {
-        // DegreeName is PK, so we update NoOfStd and Department link.
         Connection con = null;
         try {
             con = DBConnection.getConnection();
@@ -105,10 +95,6 @@ public class DegreeDAO {
                 ps.executeUpdate();
             }
 
-            // 2. Update Dept Link (Delete old and Insert new seems safest for M:N but here
-            // simplistic 1:1 view)
-            // Or UPDATE if exists.
-            // Let's DELETE for this degree then INSERT.
             String sqlDelLink = "DELETE FROM deptDegrees WHERE dgree=?";
             try (PreparedStatement ps = con.prepareStatement(sqlDelLink)) {
                 ps.setString(1, degreeName);
@@ -161,10 +147,6 @@ public class DegreeDAO {
                 ps.executeUpdate();
             }
 
-            // 2. Check/Delete Students with this degree?
-            // SDetails has `degree` FK. Simple update of FK to NULL?
-            // Foreign Key might prevent deletion.
-            // Update SDetails set degree=NULL
             String sqlStud = "UPDATE SDetails SET degree=NULL WHERE degree=?";
             try (PreparedStatement ps = con.prepareStatement(sqlStud)) {
                 ps.setString(1, degreeName);

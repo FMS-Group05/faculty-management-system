@@ -13,7 +13,6 @@ import com.faculty.util.DBConnection;
 public class LecturerDAO {
 
     public Object[][] loadLecturers() throws SQLException {
-        // Includes username at the end for hidden column
         String sql = "SELECT Name, dpt, Ccode, email, mobile, userName FROM LDetails";
         return executeQuery(sql);
     }

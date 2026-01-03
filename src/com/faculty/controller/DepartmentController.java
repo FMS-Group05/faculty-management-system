@@ -69,7 +69,6 @@ public class DepartmentController {
             JTable table = view.getDepartmentPanel().getDepartmentTable();
             int viewRow = table.getSelectedRow();
 
-            // Columns: Name=0, HOD=1, Degree=2, Staff=3, Code=4(hidden)
             Object nameObj = table.getValueAt(viewRow, 0);
             Object hodObj = table.getValueAt(viewRow, 1);
             Object staffObj = table.getValueAt(viewRow, 3);

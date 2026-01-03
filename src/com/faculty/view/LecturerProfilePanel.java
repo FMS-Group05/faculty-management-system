@@ -111,11 +111,6 @@ public class LecturerProfilePanel extends JPanel {
 
         field.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         field.setBorder(new LineBorder(PURPLE, 2, true));
-        if (field instanceof JTextField) {
-            // Default size for text fields?
-            // Using GridBagLayout fill=HORIZONTAL deals with width mostly, but preferred
-            // size helps.
-        }
         field.setPreferredSize(new Dimension(200, 30)); // Explicit size to match somewhat
 
         // Label column (smaller width)

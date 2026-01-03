@@ -21,8 +21,6 @@ public class LecturerProfileDAO {
                     values[3] = rs.getString("email");
                     values[4] = rs.getString("mobile");
                 }
-                // Return generic defaults if null to avoid UI issues?
-                // Or let UI handle nulls.
                 for (int i = 0; i < values.length; i++) {
                     if (values[i] == null)
                         values[i] = "";
@@ -34,14 +32,6 @@ public class LecturerProfileDAO {
 
     public int updateProfile(String username, String name, String dept, String course, String email, String mobile)
             throws SQLException {
-        // We need to check if a record exists first?
-        // Assuming every user created has an entry in LDetails.
-        // If not, we might need INSERT. But usually user creation handles that.
-        // For now, assume UPDATE.
-
-        // However, if the user doesn't exist in LDetails yet (maybe new user), UPDATE
-        // will return 0.
-        // Let's try UPDATE first.
 
         String sql = "UPDATE LDetails SET Name=?, dpt=?, Ccode=?, email=?, mobile=? WHERE userName=?";
         try (Connection con = DBConnection.getConnection();
@@ -55,8 +45,6 @@ public class LecturerProfileDAO {
             int rows = ps.executeUpdate();
 
             if (rows == 0) {
-                // If no row updated, maybe insert?
-                // But schema says userName is PK.
                 String insertSql = "INSERT INTO LDetails (userName, Name, dpt, Ccode, email, mobile) VALUES (?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement ps2 = con.prepareStatement(insertSql)) {
                     ps2.setString(1, username);

@@ -66,7 +66,6 @@ public class CourseController {
             JTable table = view.getCoursePanel().getCourseTable();
             int viewRow = table.getSelectedRow();
 
-            // Columns: Code=0, Name=1, Credits=2, Lecturer=3
             Object nameObj = table.getValueAt(viewRow, 1);
             Object creditsObj = table.getValueAt(viewRow, 2);
 

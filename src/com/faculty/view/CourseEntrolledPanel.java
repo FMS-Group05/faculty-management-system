@@ -63,7 +63,6 @@ public class CourseEntrolledPanel extends JPanel {
         String[] columnNames = { "Course code", "Course name", "Credits", "Grade" };
 
         // 4. Create the Table Model
-        // We override isCellEditable to make the table read-only
         this.model = new DefaultTableModel(data, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {

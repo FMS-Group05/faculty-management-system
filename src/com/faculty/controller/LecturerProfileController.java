@@ -38,7 +38,6 @@ public class LecturerProfileController {
 
     private void saveProfile() {
         String[] values = view.getFieldValues();
-        // values map: [0]=Name, [1]=Dept, [2]=Course, [3]=Email, [4]=Mobile
 
         try {
             int rows = dao.updateProfile(user.getUsername(), values[0], values[1], values[2], values[3], values[4]);

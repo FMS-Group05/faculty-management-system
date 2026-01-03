@@ -34,10 +34,6 @@ public class StudentDashboardView extends JFrame {
         timetablePanel = new TimeTablePanel(user);
         courseEnrolledPanel = new CourseEntrolledPanel(user);
 
-        // Initialize Timetable logic
-        // timeTableController = new
-        // com.faculty.controller.StudentTimeTableController(timetablePanel, user);
-
         setTitle("Student Dashboard");
         setSize(1000, 600);
         setLocationRelativeTo(null);

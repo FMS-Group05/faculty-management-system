@@ -48,7 +48,6 @@ public class StudentCourseController {
             if (result == JOptionPane.OK_OPTION) {
                 String selected = (String) courseBox.getSelectedItem();
                 if (selected != null) {
-                    // Extract ccode from "ccode - cname"
                     String[] parts = selected.split(" - ");
                     String cCode = parts[0];
 

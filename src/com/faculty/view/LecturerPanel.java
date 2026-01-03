@@ -41,8 +41,6 @@ public class LecturerPanel extends JPanel {
         topActions.add(deleteBtn);
         content.add(topActions, BorderLayout.NORTH);
 
-        // Table Configuration with purple lines
-        // Added "Username" as the last column (will be hidden)
         String[] columns = { "Full Name", "Department", "Courses teaching", "Email", "Mobile Number", "Username" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -63,7 +61,6 @@ public class LecturerPanel extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        // Hide the "Username" column (index 5)
         table.getColumnModel().removeColumn(table.getColumnModel().getColumn(5));
 
         JTableHeader header = table.getTableHeader();
@@ -139,7 +136,6 @@ public class LecturerPanel extends JPanel {
     public String getSelectedUsername() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            // "Username" is at index 5 in the model
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             int modelRow = table.convertRowIndexToModel(selectedRow);
             return model.getValueAt(modelRow, 5).toString();

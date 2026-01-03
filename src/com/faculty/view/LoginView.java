@@ -55,9 +55,7 @@ public class LoginView extends JFrame {
         new LoginController(this);
     }
 
-    // =========================================
-    //            LEFT PANEL (BRANDING)
-    // =========================================
+    //LEFT PANEL (BRANDING)
     private JPanel createLeftPanel() {
         JPanel panel = new JPanel() {
             @Override
@@ -97,9 +95,7 @@ public class LoginView extends JFrame {
         return panel;
     }
 
-    // =========================================
-    //            RIGHT PANEL (FORMS)
-    // =========================================
+    //RIGHT PANEL (FORMS)
     private JPanel createRightPanel() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(BG_COLOR);
@@ -156,9 +152,7 @@ public class LoginView extends JFrame {
         return label;
     }
 
-    // =========================================
-    //               FORMS
-    // =========================================
+    //FORMS
     
     private JPanel createSignInForm() {
         JPanel p = new JPanel();
@@ -249,9 +243,7 @@ public class LoginView extends JFrame {
         return l;
     }
 
-    // =========================================
-    //        CUSTOM MODERN COMPONENTS
-    // =========================================
+    //CUSTOM MODERN COMPONENTS
 
     // Custom Button with rounded corners and hover effect
     class ModernButton extends JButton {
@@ -334,9 +326,7 @@ public class LoginView extends JFrame {
         }
     }
 
-    // =========================================
-    //                GETTERS
-    // =========================================
+    //GETTERS
     public JButton getSignInButton() { return btnSignIn; }
     public JButton getSignUpButton() { return btnSignUp; }
     public String getSignInUsername() { return txtSignInUsername.getText().trim(); }

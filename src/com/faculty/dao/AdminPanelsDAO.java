@@ -11,7 +11,6 @@ import com.faculty.util.DBConnection;
 public class AdminPanelsDAO {
 
     public Object[][] loadStudentPanel() throws SQLException {
-        // Includes username at the end for hidden column
         String sql = "SELECT Name, STDID, degree, email, mobile, userName FROM SDetails";
         return executeQuery(sql);
     }
@@ -22,7 +21,6 @@ public class AdminPanelsDAO {
     }
 
     public Object[][] loadCourses() throws SQLException {
-        // Left join to get lecturer name if assigned, otherwise null
         String sql = "SELECT c.ccode, c.cname, c.credits, l.Name " +
                 "FROM courses c " +
                 "LEFT JOIN LDetails l ON c.ccode = l.Ccode";
@@ -30,18 +28,6 @@ public class AdminPanelsDAO {
     }
 
     public Object[][] loadDepartments() throws SQLException {
-        // Departments table has basic info.
-        // HOD is just a string name in the table schema provided.
-        // For 'Degree', we need to check deptDegrees table.
-        // Note: A department might offer multiple degrees, but the UI table design
-        // implies one line
-        // per department or maybe we just show one or aggregate.
-        // For simplicity based on current UI "Degree" column, let's just pick one or
-        // group.
-        // But looking at UI mock data {"Applied Computing", "Kumar Sanga", "Engineering
-        // Technology", "15"}
-        // It seems to expect: Name, HOD, Degree(s), NoOfStaff.
-        // Let's do a basic join.
         String sql = "SELECT d.name, d.HOD, dd.dgree, d.noOfStaf " +
                 "FROM Departments d " +
                 "LEFT JOIN deptDegrees dd ON d.dptN = dd.dptN";
@@ -49,8 +35,6 @@ public class AdminPanelsDAO {
     }
 
     public Object[][] loadDegrees() throws SQLException {
-        // UI Expects: Degree, Department, No of Students
-        // We join Degrees -> deptDegrees -> Departments to get Dept Name.
         String sql = "SELECT deg.degree, d.name, deg.NoOfStd " +
                 "FROM Degrees deg " +
                 "LEFT JOIN deptDegrees dd ON deg.degree = dd.dgree " +
@@ -165,12 +149,6 @@ public class AdminPanelsDAO {
             con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
-            // 1. Delete from SDetails
-            // Note: If you have other tables like CourseEnrolled referencing this user,
-            // you might need to delete from those first or use CASCADE in DB.
-            // Assuming for now simple delete logic or DB handles cascade.
-
-            // Delete enrolled courses first (to be safe if no cascade)
             String sqlEnrolled = "DELETE FROM EnrolledCourses WHERE Uname=?";
             try (PreparedStatement ps = con.prepareStatement(sqlEnrolled)) {
                 ps.setString(1, username);

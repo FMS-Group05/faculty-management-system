@@ -41,8 +41,6 @@ public class StudentPanel extends JPanel {
         topActions.add(deleteBtn);
         content.add(topActions, BorderLayout.NORTH);
 
-        // Table Configuration with purple lines
-        // Added "Username" as the last column (will be hidden)
         String[] columns = { "Full Name", "Student ID", "Degree", "Email", "Mobile Number", "Username" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
         for (int i = 0; i < 10; i++) {
@@ -62,7 +60,6 @@ public class StudentPanel extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        // Hide the "Username" column (index 5)
         table.getColumnModel().removeColumn(table.getColumnModel().getColumn(5));
 
         JTableHeader header = table.getTableHeader();
@@ -137,10 +134,7 @@ public class StudentPanel extends JPanel {
     public String getSelectedUsername() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            // "Username" is at index 5 in the model
             DefaultTableModel model = (DefaultTableModel) table.getModel();
-            // We need to convert view index to model index in case of sorting (if enabled
-            // later)
             int modelRow = table.convertRowIndexToModel(selectedRow);
             return model.getValueAt(modelRow, 5).toString();
         }

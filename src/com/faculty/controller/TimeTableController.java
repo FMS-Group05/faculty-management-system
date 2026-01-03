@@ -27,10 +27,6 @@ public class TimeTableController {
         view.getTimeTablePanel().getDeleteButton().addActionListener(e -> deleteTimeTable());
         view.getTimeTablePanel().getSaveButton().addActionListener(e -> saveChanges());
 
-        // Edit button is less relevant for Degree/Year PKs, but perhaps for
-        // re-uploading?
-        // The View handles re-upload via the table button directly.
-        // We can wire it to show a message or just disable it if not needed.
         view.getTimeTablePanel().getEditButton().addActionListener(e -> JOptionPane.showMessageDialog(view,
                 "To edit the image, click 'Upload files' in the table. To change Degree/Year, please delete and add new."));
     }
@@ -93,7 +89,6 @@ public class TimeTableController {
     }
 
     private void saveChanges() {
-        // Iterate table and update DB with current image paths
         JTable table = view.getTimeTablePanel().getTable();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         boolean success = true;
@@ -112,10 +107,6 @@ public class TimeTableController {
 
             String dbPath = currentPath;
 
-            // Check if it is a new file upload (file exists and path is absolute, or
-            // doesn't start with Tables/)
-            // We assume if it's already "Tables/timetable_..." it's good.
-            // If the user selected a new file, the Table will contain the absolute path.
             File file = new File(currentPath);
             if (file.exists() && file.isAbsolute()) {
                 String newFileName = "timetable_" + degree + "_" + year + ".png";
@@ -123,11 +114,11 @@ public class TimeTableController {
 
                 try {
                     Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    dbPath = "Tables/" + newFileName; // Path to save in DB
+                    dbPath = "Tables/" + newFileName;
                 } catch (IOException e) {
                     e.printStackTrace();
                     success = false;
-                    continue; // Skip DB update if copy failed
+                    continue;
                 }
             }
 

@@ -112,7 +112,6 @@ public class CoursePanel extends JPanel {
     public String getSelectedCourseCode() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            // Course Code is at column 0 in view and model
             return table.getValueAt(selectedRow, 0).toString();
         }
         return null;
