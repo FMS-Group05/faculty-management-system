@@ -5,3 +5,4 @@
 /.idea/
 /.vscode/
 
+src/com/faculty/util/DBConfig.java
