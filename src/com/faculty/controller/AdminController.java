@@ -50,9 +50,6 @@ public class AdminController {
                         "Success",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-
-                // Open Signup page AFTER OK
-                new LoginView().setVisible(true);
             }
         );
 
