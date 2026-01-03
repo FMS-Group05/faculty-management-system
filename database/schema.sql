@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 CREATE TABLE courses (
     ccode VARCHAR(10) PRIMARY KEY,
-    cname VARCHAR(100),
+    cname VARCHAR(200),
     credits INT
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE Departments (
 );
 
 CREATE TABLE Degrees (
-    degree VARCHAR(50) PRIMARY KEY,
+    degree VARCHAR(200) PRIMARY KEY,
     NoOfStd INT
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE SDetails (
     userName VARCHAR(50) PRIMARY KEY,
     Name VARCHAR(100),
     STDID VARCHAR(20) UNIQUE,
-    degree VARCHAR(50),
+    degree VARCHAR(200),
     email VARCHAR(100),
     mobile VARCHAR(15),
     FOREIGN KEY (userName) REFERENCES users(username),
@@ -62,7 +62,7 @@ CREATE TABLE EnrolledCourses (
 
 CREATE TABLE deptDegrees (
     dptN VARCHAR(10),
-    dgree VARCHAR(50),
+    dgree VARCHAR(200),
     PRIMARY KEY (dptN, dgree),
     FOREIGN KEY (dptN) REFERENCES Departments(dptN),
     FOREIGN KEY (dgree) REFERENCES Degrees(degree)
@@ -83,3 +83,51 @@ CREATE TABLE TimeTables (
     PRIMARY KEY (degree, year),
     FOREIGN KEY (degree) REFERENCES Degrees(degree)
 );
+
+DELIMITER //
+
+-- 1. Update count on INSERT
+CREATE TRIGGER after_student_insert
+AFTER INSERT ON SDetails
+FOR EACH ROW
+BEGIN
+    UPDATE Degrees 
+    SET NoOfStd = (SELECT COUNT(*) FROM SDetails WHERE degree = NEW.degree)
+    WHERE degree = NEW.degree;
+END //
+
+-- 2. Update count on DELETE
+CREATE TRIGGER after_student_delete
+AFTER DELETE ON SDetails
+FOR EACH ROW
+BEGIN
+    UPDATE Degrees 
+    SET NoOfStd = (SELECT COUNT(*) FROM SDetails WHERE degree = OLD.degree)
+    WHERE degree = OLD.degree;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+-- 3. Update staff count on INSERT
+CREATE TRIGGER after_lecturer_insert
+AFTER INSERT ON LDetails
+FOR EACH ROW
+BEGIN
+    UPDATE Departments 
+    SET noOfStaf = (SELECT COUNT(*) FROM LDetails WHERE dpt = NEW.dpt)
+    WHERE dptN = NEW.dpt;
+END //
+
+-- 4. Update staff count on DELETE
+CREATE TRIGGER after_lecturer_delete
+AFTER DELETE ON LDetails
+FOR EACH ROW
+BEGIN
+    UPDATE Departments 
+    SET noOfStaf = (SELECT COUNT(*) FROM LDetails WHERE dpt = OLD.dpt)
+    WHERE dptN = OLD.dpt;
+END //
+
+DELIMITER ;
