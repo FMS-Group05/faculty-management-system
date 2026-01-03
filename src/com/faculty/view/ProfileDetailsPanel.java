@@ -1,6 +1,8 @@
 package com.faculty.view;
 
 import com.faculty.controller.StudentDetailsController;
+import com.faculty.controller.StudentDetailsController;
+import com.faculty.dao.StudentDetailsDAO;
 import com.faculty.model.User;
 //import com.faculty.util.ColorPalette;
 
@@ -9,11 +11,12 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class ProfileDetailsPanel extends JPanel {
     private final JButton saveButton = new JButton("Save changes");
-    private final String[] labels = {"Full Name", "Student ID", "Degree", "Email", "Mobile Number"};
-    private final JTextField[] fields = new JTextField[labels.length];
+    private final String[] labels = { "Full Name", "Student ID", "Degree", "Email", "Mobile Number" };
+    private final JComponent[] fields = new JComponent[labels.length];
     private final Color PURPLE = new Color(132, 84, 255);
 
     public ProfileDetailsPanel(User user) {
@@ -45,8 +48,25 @@ public class ProfileDetailsPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // ===== FORM FIELDS =====
+        StudentDetailsDAO studentDetailsDAO = new StudentDetailsDAO();
         for (int i = 0; i < labels.length; i++) {
-            addField(cardPanel, gbc, i, labels[i], new JTextField());
+            JComponent field;
+            if (labels[i].equals("Degree")) {
+                JComboBox<String> comboBox = new JComboBox<>();
+                try {
+                    List<String> degrees = studentDetailsDAO.getAllDegreeNames();
+                    for (String degree : degrees) {
+                        comboBox.addItem(degree);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    comboBox.addItem("Error loading degrees");
+                }
+                field = comboBox;
+            } else {
+                field = new JTextField();
+            }
+            addField(cardPanel, gbc, i, labels[i], field);
         }
 
         // ===== SAVE BUTTON =====
@@ -59,8 +79,7 @@ public class ProfileDetailsPanel extends JPanel {
         saveButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         saveButton.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(PURPLE, 2, true),
-                new EmptyBorder(8, 16, 8, 16)
-        ));
+                new EmptyBorder(8, 16, 8, 16)));
 
         // Smooth hover and click effects
         saveButton.addMouseListener(new MouseAdapter() {
@@ -68,11 +87,12 @@ public class ProfileDetailsPanel extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 saveButton.setBackground(new Color(50, 180, 50));
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 saveButton.setBackground(PURPLE);
             }
-        
+
         });
 
         gbc.gridx = 0;
@@ -90,16 +110,16 @@ public class ProfileDetailsPanel extends JPanel {
 
     // ===== HELPER METHOD =====
     private void addField(JPanel panel, GridBagConstraints gbc, int row,
-                          String labelText, JTextField textField) {
+            String labelText, JComponent field) {
 
         JLabel label = new JLabel(labelText);
         label.setFont(new Font("Segoe UI", Font.BOLD, 16));
         label.setForeground(PURPLE);
 
-        textField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        textField.setBorder(new LineBorder(PURPLE, 2, true));
-        textField.setPreferredSize(new Dimension(400, 32)); // size similar to Lecturer panel
-        textField.setBackground(new Color(250, 250, 255));
+        field.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        field.setBorder(new LineBorder(PURPLE, 2, true));
+        field.setPreferredSize(new Dimension(400, 32)); // size similar to Lecturer panel
+        field.setBackground(new Color(250, 250, 255));
 
         // Label column
         gbc.gridx = 0;
@@ -107,22 +127,44 @@ public class ProfileDetailsPanel extends JPanel {
         gbc.weightx = 0.3;
         panel.add(label, gbc);
 
-        // Text field column
+        // Input field column
         gbc.gridx = 1;
         gbc.weightx = 0.7;
-        panel.add(textField, gbc);
+        panel.add(field, gbc);
 
         // Store reference for controller
-        fields[row] = textField;
+        fields[row] = field;
     }
 
     // ===== GETTERS =====
-    public JButton getSaveButton() { return saveButton; }
-    public JTextField[] getFields() { return fields; }
+    public JButton getSaveButton() {
+        return saveButton;
+    }
+
+    public JComponent[] getFields() {
+        return fields;
+    }
 
     public void setFields(String[] values) {
         for (int i = 0; i < fields.length; i++) {
-            fields[i].setText(values[i]);
+            if (fields[i] instanceof JTextField) {
+                ((JTextField) fields[i]).setText(values[i]);
+            } else if (fields[i] instanceof JComboBox) {
+                ((JComboBox<?>) fields[i]).setSelectedItem(values[i]);
+            }
         }
+    }
+
+    public String[] getFieldValues() {
+        String[] values = new String[fields.length];
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i] instanceof JTextField) {
+                values[i] = ((JTextField) fields[i]).getText();
+            } else if (fields[i] instanceof JComboBox) {
+                Object selected = ((JComboBox<?>) fields[i]).getSelectedItem();
+                values[i] = selected != null ? selected.toString() : "";
+            }
+        }
+        return values;
     }
 }

@@ -5,6 +5,19 @@ import java.sql.*;
 
 public class StudentDetailsDAO {
 
+    public java.util.List<String> getAllDegreeNames() throws SQLException {
+        java.util.List<String> degrees = new java.util.ArrayList<>();
+        String sql = "SELECT degree FROM Degrees";
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                degrees.add(rs.getString("degree"));
+            }
+        }
+        return degrees;
+    }
+
     public int updateProfile(String username, String fullName, String studentId, String degree, String email,
             String mobileNumber) throws SQLException {
         String sql = "UPDATE SDetails SET Name=?, STDID=?, degree=?, email=?, mobile=? WHERE userName=?";

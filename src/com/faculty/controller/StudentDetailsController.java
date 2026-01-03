@@ -22,13 +22,10 @@ public class StudentDetailsController {
         }
 
         view.getSaveButton().addActionListener(e -> {
-            JTextField[] fields = view.getFields();
-            String[] values = new String[fields.length];
-            for (int i = 0; i < fields.length; i++) {
-                values[i] = fields[i].getText();
-            }
+            String[] values = view.getFieldValues();
             try {
-                int rowsAffected = dao.updateProfile(user.getUsername(), values[0], values[1], values[2], values[3], values[4]);
+                int rowsAffected = dao.updateProfile(user.getUsername(), values[0], values[1], values[2], values[3],
+                        values[4]);
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(view, "Profile updated successfully");
                 } else {
