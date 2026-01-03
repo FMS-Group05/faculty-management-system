@@ -4,12 +4,12 @@
 Group: FMS-Group05
 
 Group Members:
-    * CS/2022/0 - K.S.Deshan 
-    * CS/2022/007 - S.C.Jayasekara
-    * CS/2022/0 - 
-    * CS/2022/0 - 
-    * CS/2022/0 -
-    * CS/2022/066 - De Silva K.P.D.
+* CS/2022/002 - K.S.Deshan
+* CS/2022/007 - S.C.Jayasekara
+* CS/2022/0 - 
+* CS/2022/020 - N.A.P.Hirushan
+* CS/2022/026 - K.M.R.P.Kalhara
+* CS/2022/066 - De Silva K.P.D.
 
 ##  Database connection
 * Add the given "DBConfig.java" file to the project path "src/com/faculty/util/DBConfig.java"
