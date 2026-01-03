@@ -2,6 +2,8 @@ package com.faculty.controller;
 
 import com.faculty.dao.AdminPanelsDAO;
 import com.faculty.view.AdminDashboardView;
+import com.faculty.view.LoginView;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,13 +42,20 @@ public class AdminController {
         view.getTimeTableBtn().addActionListener(e -> timeTableController.refreshPanel());
 
         view.getLogoutButton().addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(view, "Do you want to log out?", "Confirm",
-                    JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                view.dispose();
-                JOptionPane.showMessageDialog(null, "Logged out successfully");
+
+                // This waits until OK is clicked
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Logged out successfully",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+                // Open Signup page AFTER OK
+                new LoginView().setVisible(true);
             }
-        });
+        );
+
     }
 
     // initTimeTableActions removed - moved to TimeTableController

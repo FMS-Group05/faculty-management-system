@@ -33,12 +33,6 @@ public class StudentDashboardView extends JFrame {
 
         // Initialize Timetable logic
         timeTableController = new com.faculty.controller.StudentTimeTableController(timetablePanel, user);
-        // Note: Profile logic is handled inside StudentDetailsController (where is it
-        // instantiated?)
-        // The file list showed StudentDetailsController usage but I don't see it here.
-        // AdminDashboardView creates controllers. StudentDashboardView might need to
-        // behave similarly.
-        // For now, I only handle TimeTable as requested.
 
         setTitle("Student Dashboard");
         setSize(1000, 600);
@@ -47,50 +41,57 @@ public class StudentDashboardView extends JFrame {
         setLayout(new BorderLayout());
 
         // ===== LEFT SIDEBAR =====
-        JPanel sidebar = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+        JPanel sidebar = new JPanel();
+        sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setPreferredSize(new Dimension(280, 600));
         sidebar.setBackground(PURPLE);
+        sidebar.setBorder(new EmptyBorder(20, 0, 20, 0));
 
+        // Welcome label
         JLabel welcome = new JLabel("Welcome, " + user.getUsername());
         welcome.setForeground(Color.WHITE);
         welcome.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        welcome.setBorder(new EmptyBorder(25, 0, 15, 0));
+        welcome.setBorder(new EmptyBorder(25, 20, 25, 20));
+        welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
         sidebar.add(welcome);
 
-        // Buttons with emojis
+        // Buttons with emojis (equal spacing)
         btnProfile = menuButton("Profile Details", "👤", true);
         btnTimetable = menuButton("Time Table", "🗓️", false);
         btnCourses = menuButton("Course Enrolled", "📚", false);
 
+        btnProfile.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnTimetable.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnCourses.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         sidebar.add(btnProfile);
+        sidebar.add(Box.createVerticalStrut(15)); // space between buttons
         sidebar.add(btnTimetable);
+        sidebar.add(Box.createVerticalStrut(15));
         sidebar.add(btnCourses);
+
+        // Add vertical glue to push logout to bottom
+        sidebar.add(Box.createVerticalGlue());
 
         // Logout button
         btnLogout = new JButton("Log Out");
         btnLogout.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnLogout.setPreferredSize(new Dimension(160, 45));
+        btnLogout.setMaximumSize(new Dimension(200, 45));
         btnLogout.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnLogout.setBackground(Color.WHITE);
         btnLogout.setForeground(PURPLE);
         btnLogout.setFocusPainted(false);
         btnLogout.setBorder(new LineBorder(Color.WHITE, 1, true));
 
-        JPanel logoutBox = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
-        logoutBox.setOpaque(false);
-        logoutBox.add(btnLogout);
-        sidebar.add(logoutBox);
+        sidebar.add(btnLogout);
+        sidebar.add(Box.createRigidArea(new Dimension(0, 20))); // bottom padding
 
         // Logout action
         btnLogout.addActionListener(e -> {
-            // Show logout message
             JOptionPane.showMessageDialog(this, "Logged out successfully");
-
-            // Open login/signup window
             LoginView loginView = new LoginView();
-            loginView.setVisible(true); // opens login window (can default to signup)
-
-            // Close current dashboard
+            loginView.setVisible(true);
             dispose();
         });
 
@@ -105,19 +106,16 @@ public class StudentDashboardView extends JFrame {
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnLogout.setBackground(Color.WHITE);
-                btnLogout.setForeground(ColorPalette.PRIMARY);
+                btnLogout.setForeground(PURPLE);
             }
         });
-
-        sidebar.add(btnLogout);
-        sidebar.add(Box.createRigidArea(new Dimension(0, 20)));
 
         add(sidebar, BorderLayout.WEST);
 
         // ===== RIGHT CONTENT PANEL =====
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.WHITE);
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0)); // left padding
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
         add(contentPanel, BorderLayout.CENTER);
 
         // Default view
@@ -131,11 +129,12 @@ public class StudentDashboardView extends JFrame {
         setVisible(true);
     }
 
-    // Lecturer-style sidebar button with emoji
+    // Sidebar button with emoji
     private JButton menuButton(String text, String emoji, boolean selected) {
         JButton btn = new JButton("  " + emoji + "     " + text);
         btn.setPreferredSize(new Dimension(250, 45));
-        btn.setFont(new Font("Segoe UI Emoji", Font.BOLD, 16)); // emoji-friendly font
+        btn.setMaximumSize(new Dimension(250, 45));
+        btn.setFont(new Font("Segoe UI Emoji", Font.BOLD, 16));
         btn.setHorizontalAlignment(SwingConstants.LEFT);
         btn.setFocusPainted(false);
         btn.setBackground(Color.WHITE);

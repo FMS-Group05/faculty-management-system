@@ -3,8 +3,9 @@ package com.faculty.view;
 import com.faculty.model.User;
 
 import javax.swing.*;
-
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TimeTablePanel extends JPanel {
 
@@ -12,41 +13,67 @@ public class TimeTablePanel extends JPanel {
     private JLabel imageLabel;
     private JComboBox<Integer> yearCombo;
     private JLabel lblStatus;
+    private JLabel lblDateTime; // Label for date and time
 
     public TimeTablePanel(User user) {
         setBackground(new Color(245, 245, 250));
         setLayout(new BorderLayout());
 
-        // Top Panel: Title and Year Selector
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
+        // Top Panel: Title + Date/Time + Year Selector
+        JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(new Color(245, 245, 250));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        // Left: Title only
         JLabel title = new JLabel("My Timetable");
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         title.setForeground(PURPLE);
+        topPanel.add(title, BorderLayout.WEST);
+
+        // Right Panel: Date/Time on top, Year selector at bottom
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BorderLayout());
+        rightPanel.setBackground(new Color(245, 245, 250));
+
+        // Current Date & Time at top-right (bold and larger font)
+        lblDateTime = new JLabel();
+        lblDateTime.setFont(new Font("Segoe UI", Font.BOLD, 18)); // Bold and larger
+        lblDateTime.setForeground(PURPLE); // Theme color
+        lblDateTime.setHorizontalAlignment(SwingConstants.RIGHT);
+        updateDateTime();
+
+        Timer timer = new Timer(1000, e -> updateDateTime());
+        timer.start();
+
+        rightPanel.add(lblDateTime, BorderLayout.NORTH);
+
+        // Year selector at bottom-right (more aligned to corner)
+        JPanel yearPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        yearPanel.setBackground(new Color(245, 245, 250));
 
         JLabel lblYear = new JLabel("Select Year:");
         lblYear.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblYear.setForeground(new Color(132, 84, 255));
 
-        yearCombo = new JComboBox<>(new Integer[] { 1, 2, 3, 4 });
+        yearCombo = new JComboBox<>(new Integer[]{1, 2, 3, 4});
         yearCombo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         yearCombo.setPreferredSize(new Dimension(80, 30));
 
-        topPanel.add(title);
-        topPanel.add(Box.createHorizontalStrut(30)); // Spacer
-        topPanel.add(lblYear);
-        topPanel.add(yearCombo);
+        yearPanel.add(lblYear);
+        yearPanel.add(Box.createHorizontalStrut(5)); // Small gap
+        yearPanel.add(yearCombo);
+
+        rightPanel.add(yearPanel, BorderLayout.SOUTH);
+
+        topPanel.add(rightPanel, BorderLayout.EAST);
 
         add(topPanel, BorderLayout.NORTH);
 
         // Center Panel: Scrollable Image Area
-        // Center Panel: Scaled Image Area
         imageLabel = new JLabel("Select a year to view timetable", SwingConstants.CENTER) {
             @Override
             protected void paintComponent(Graphics g) {
                 if (getIcon() != null && getIcon() instanceof ImageIcon) {
-                    // Draw background if needed (though usually transparent here or handled by
-                    // parent)
                     if (isOpaque()) {
                         g.setColor(getBackground());
                         g.fillRect(0, 0, getWidth(), getHeight());
@@ -79,7 +106,6 @@ public class TimeTablePanel extends JPanel {
         imageLabel.setForeground(Color.GRAY);
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Add directly to center (no scroll pane)
         add(imageLabel, BorderLayout.CENTER);
 
         // Bottom Panel: Status/Info
@@ -89,6 +115,11 @@ public class TimeTablePanel extends JPanel {
         lblStatus.setFont(new Font("Segoe UI", Font.ITALIC, 14));
         bottomPanel.add(lblStatus);
         add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+    private void updateDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMM yyyy HH:mm:ss");
+        lblDateTime.setText(sdf.format(new Date()));
     }
 
     public JComboBox<Integer> getYearComboBox() {

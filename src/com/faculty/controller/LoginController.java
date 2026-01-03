@@ -54,24 +54,33 @@ public class LoginController {
                 return;
             }
 
-            view.dispose();
+            // ---------------- Show "Logging in..." dialog ----------------
+            final JDialog loadingDialog = new JDialog(view, "Logging in...", true);
+            JLabel loadingLabel = new JLabel("Please wait...", SwingConstants.CENTER);
+            loadingLabel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+            loadingDialog.add(loadingLabel);
+            loadingDialog.pack();
+            loadingDialog.setLocationRelativeTo(view);
 
-            // Create a User object to pass to dashboards
-            User user = new User(username, role);
+            // Timer for small delay (1 second)
+            Timer timer = new Timer(1000, ev -> {
+                loadingDialog.dispose(); // close loading dialog
+                view.dispose();          // close login window
 
-            switch (role) {
-                case "Admin" -> new AdminDashboardView(user).setVisible(true);
-                case "Lecturer" -> new LecturerDashboardView(user).setVisible(true);
+                User user = new User(username, role);
 
-                // ✅ Added Student Dashboard Launch (using your new GUI)
-                case "Student" -> {
-                    StudentDashboardView s = new StudentDashboardView(user);
-                    s.setVisible(true);
-                    // new StudentDetailsController(s);
+                // Open corresponding dashboard
+                switch (role) {
+                    case "Admin" -> new AdminDashboardView(user).setVisible(true);
+                    case "Lecturer" -> new LecturerDashboardView(user).setVisible(true);
+                    case "Student" -> new StudentDashboardView(user).setVisible(true);
+                    default -> JOptionPane.showMessageDialog(null, "Unknown role: " + role);
                 }
+            });
+            timer.setRepeats(false); // execute only once
+            timer.start();
 
-                default -> JOptionPane.showMessageDialog(null, "Unknown role: " + role);
-            }
+            loadingDialog.setVisible(true); // show dialog (modal)
         });
     }
 }
