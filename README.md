@@ -4,9 +4,9 @@
 Group: FMS-Group05
 
 Group Members:
-    * CS/2022/020 - N.A.P.Hirushan
+    * CS/2022/020 -
     * CS/2022/0 - 
-    * CS/2022/0 - 
+    * CS/2022/0 -  N.A.P.Hirushan
     * CS/2022/0 - 
     * CS/2022/0 - 
     * CS/2022/066 - De Silva K.P.D.
